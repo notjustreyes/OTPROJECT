@@ -296,7 +296,7 @@
       badge.textContent = badgeText;
       badge.className   = `inline-block mt-1 text-[9px] font-semibold px-1.5 py-0.5 rounded-full tracking-wide ${badgeClass}`;
 
-      document.getElementById('barcodeSkuLabel').textContent = product.sku;
+      document.getElementById('barcodeSkuLabel').textContent ='SKU: ' +  product.sku;
 
       detailCard.classList.remove('hidden');
       detailCard.style.opacity   = '0';
