@@ -3,133 +3,197 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Onitsuka Tiger — Inventory System</title>
+  <title>Onitsuka Tiger — Inventory</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
-  
+
   <style>
-    /* Mimic Apple SF Pro / Helvetica Neue clean tracking */
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
+
+    #layoutSpacer {
+      transition: height 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #resultsList::-webkit-scrollbar { width: 3px; }
+    #resultsList::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 99px; }
+
+    #searchInput:focus { outline: none; box-shadow: 0 0 0 1.5px #000; }
+
+    .result-row { -webkit-tap-highlight-color: transparent; }
+    .result-row:active { transform: scale(0.985); }
+
+    #detailCard {
+      transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #brandHeader {
+      transition: max-height 500ms cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 400ms ease,
+                  margin-bottom 500ms cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 400ms ease;
+    }
+
+    .badge-in    { background:#e8f5e9; color:#2e7d32; }
+    .badge-low   { background:#fff8e1; color:#f57f17; }
+    .badge-out   { background:#fce4ec; color:#c62828; }
+    .badge-nil   { background:#f2f2f7; color:#8e8e93; }
   </style>
 </head>
 <body class="bg-[#f5f5f7] min-h-screen p-4 flex flex-col items-center select-none overflow-x-hidden">
 
-  <button id="homeBtn" class="fixed top-6 left-6 text-xs font-medium text-[#8e8e93] hover:text-black active:text-black transition-colors duration-300 flex items-center space-x-1.5 z-50 uppercase tracking-wider">
+  <button id="homeBtn" class="fixed top-6 left-6 text-[11px] font-medium text-[#8e8e93] hover:text-black active:text-black transition-colors flex items-center space-x-1.5 z-50 uppercase tracking-wider">
     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
     </svg>
     <span>Home</span>
   </button>
 
-  <div id="layoutSpacer" class="h-[28vh] transition-all duration-[600ms] ease-in-out w-full"></div>
+  <div id="layoutSpacer" style="height:28vh" class="w-full flex-shrink-0"></div>
 
-  <main id="mainContainer" class="w-full max-w-sm flex flex-col transition-all duration-[600ms] ease-in-out">
-    
-    <div id="brandHeader" class="flex flex-col items-center transition-all duration-[600ms] ease-in-out transform origin-top overflow-hidden max-h-24 opacity-100 mb-10 scale-100">
-      <h1 class="text-3xl font-black tracking-tighter text-black uppercase" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+  <main id="mainContainer" class="w-full max-w-sm flex flex-col">
+
+    <div id="brandHeader" class="flex flex-col items-center overflow-hidden"
+         style="max-height:6rem; opacity:1; margin-bottom:2.5rem; transform:scale(1);">
+      <h1 class="text-3xl font-black tracking-tighter text-black uppercase"
+          style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
         Onitsuka Tiger
       </h1>
     </div>
 
     <div class="relative w-full z-10">
-      <input 
-        type="text" 
-        id="searchInput" 
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-        placeholder="Search product..." 
-        class="w-full px-5 py-3.5 bg-[#e8e8ed] focus:bg-white border border-transparent focus:border-black rounded-full focus:outline-none transition-all duration-[600ms] ease-in-out text-base text-black placeholder-[#8e8e93] text-center font-normal tracking-wide shadow-sm"
+      <input
+        type="text"
+        id="searchInput"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+        placeholder="Search product…"
+        class="w-full px-5 py-3.5 bg-[#e8e8ed] focus:bg-white border border-transparent rounded-full transition-all duration-300 text-base text-black placeholder-[#8e8e93] text-center font-normal tracking-wide shadow-sm"
       >
+      <button id="clearBtn"
+        class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8e8e93] hidden transition-opacity"
+        aria-label="Clear search">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
     </div>
 
-    <div id="resultsList" class="space-y-2 max-h-64 overflow-y-auto mt-3 mb-4 w-full hidden z-20"></div>
+    <div id="resultsList" class="space-y-2 max-h-80 overflow-y-auto mt-3 mb-1 w-full hidden z-20"></div>
 
     <p id="footnote" class="text-[11px] text-[#8e8e93] text-center tracking-wide font-normal mt-3 mb-6 transition-opacity duration-300">
-      Search product via product name / SKU / colour
+      Search by product name, SKU or colour
     </p>
 
-    <div id="detailCard" class="w-full bg-white rounded-[24px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-[#e8e8ed] flex flex-col items-center transition-all duration-[600ms] ease-in-out opacity-0 translate-y-4 hidden z-0">
-      
+    <div id="detailCard"
+         class="w-full bg-white rounded-[24px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#e8e8ed] flex flex-col items-center opacity-0 translate-y-4 hidden z-0">
+
       <div class="w-48 h-48 bg-[#fafafa] rounded-2xl flex items-center justify-center p-3 mb-5 overflow-hidden">
-        <img id="detailImage" src="" alt="Footwear Model" class="object-contain max-w-full max-h-full mix-blend-multiply">
+        <img id="detailImage" src="" alt="Product" class="object-contain max-w-full max-h-full mix-blend-multiply">
       </div>
 
-      <h2 id="detailName" class="text-lg font-semibold tracking-tight text-black text-center"></h2>
-      <p id="detailColour" class="text-xs font-medium text-[#8e8e93] capitalize mt-0.5 mb-1 text-center"></p>
-      <p id="detailSku" class="text-[11px] font-mono tracking-widest text-[#c7c7cc] uppercase mb-5 text-center"></p>
-      
+      <h2 id="detailName"   class="text-lg font-semibold tracking-tight text-black text-center"></h2>
+      <p  id="detailColour" class="text-xs font-medium text-[#8e8e93] capitalize mt-0.5 mb-1 text-center"></p>
+      <p  id="detailSku"    class="text-[11px] font-mono tracking-widest text-[#c7c7cc] uppercase mb-5 text-center"></p>
+
       <div class="grid grid-cols-2 gap-px bg-[#e8e8ed] w-full rounded-xl overflow-hidden mb-5 text-center">
         <div class="bg-[#fafafa] py-3 px-2">
-          <span class="block text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider">Quantity</span>
-          <span id="detailStock" class="text-sm font-bold text-black mt-0.5 block"></span>
+          <span class="block text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider mb-0.5">Quantity</span>
+          <span id="detailStock" class="text-sm font-bold text-black block"></span>
+          <span id="stockBadge" class="inline-block mt-1 text-[9px] font-semibold px-1.5 py-0.5 rounded-full tracking-wide"></span>
         </div>
         <div class="bg-[#fafafa] py-3 px-2">
-          <span class="block text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider">Shelf Loc</span>
-          <span id="detailLocation" class="text-sm font-bold text-black mt-0.5 block"></span>
+          <span class="block text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider mb-0.5">Shelf Loc</span>
+          <span id="detailLocation" class="text-sm font-bold text-black block"></span>
         </div>
       </div>
 
-      <div class="w-full flex justify-center items-center py-4 bg-white border border-[#f2f2f7] rounded-xl">
+      <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2">
+        <span id="barcodeSkuLabel"
+          class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] uppercase font-medium select-all">
+        </span>
         <svg id="barcodeTarget" class="max-w-[90%]"></svg>
       </div>
     </div>
+
+    <div class="h-8"></div>
   </main>
 
   <script src="products.js"></script>
 
   <script>
+    function isNil(val) {
+      return val === undefined || val === null || String(val).trim().toUpperCase() === 'NIL' || String(val).trim() === '';
+    }
+
+    function stockMeta(raw) {
+      if (isNil(raw)) {
+        return { qty: null, badgeClass: 'badge-nil', badgeText: 'Not set', displayStock: '—' };
+      }
+      const qty = parseInt(raw, 10);
+      if (isNaN(qty)) {
+        return { qty: null, badgeClass: 'badge-nil', badgeText: 'Not set', displayStock: String(raw) };
+      }
+      if (qty <= 0)  return { qty, badgeClass: 'badge-out', badgeText: 'Out of stock', displayStock: String(qty) };
+      if (qty <= 3)  return { qty, badgeClass: 'badge-low', badgeText: 'Low stock',    displayStock: String(qty) };
+      return           { qty, badgeClass: 'badge-in',  badgeText: 'In stock',     displayStock: String(qty) };
+    }
+
     let fuse;
-    let isProductShowing = false; 
+    let isProductShowing = false;
 
     function initSearch() {
-      const options = {
+      fuse = new Fuse(inventoryData, {
         keys: ['name', 'sku', 'colour'],
-        threshold: 0.35
-      };
-      fuse = new Fuse(inventoryData, options);
+        threshold: 0.35,
+        ignoreLocation: true,
+        minMatchCharLength: 2,
+      });
     }
 
-    const searchInput = document.getElementById('searchInput');
-    const resultsList = document.getElementById('resultsList');
-    const detailCard = document.getElementById('detailCard');
-    const layoutSpacer = document.getElementById('layoutSpacer');
-    const footnote = document.getElementById('footnote');
-    const brandHeader = document.getElementById('brandHeader');
-    const homeBtn = document.getElementById('homeBtn');
+    const searchInput   = document.getElementById('searchInput');
+    const clearBtn      = document.getElementById('clearBtn');
+    const resultsList   = document.getElementById('resultsList');
+    const detailCard    = document.getElementById('detailCard');
+    const layoutSpacer  = document.getElementById('layoutSpacer');
+    const footnote      = document.getElementById('footnote');
+    const brandHeader   = document.getElementById('brandHeader');
+    const homeBtn       = document.getElementById('homeBtn');
 
     function hideLogo() {
-      brandHeader.classList.remove('max-h-24', 'opacity-100', 'mb-10', 'scale-100');
-      brandHeader.classList.add('max-h-0', 'opacity-0', 'mb-0', 'scale-95');
+      brandHeader.style.maxHeight    = '0px';
+      brandHeader.style.opacity      = '0';
+      brandHeader.style.marginBottom = '0px';
+      brandHeader.style.transform    = 'scale(0.95)';
     }
-
     function showLogo() {
-      brandHeader.classList.remove('max-h-0', 'opacity-0', 'mb-0', 'scale-95');
-      brandHeader.classList.add('max-h-24', 'opacity-100', 'mb-10', 'scale-100');
+      brandHeader.style.maxHeight    = '6rem';
+      brandHeader.style.opacity      = '1';
+      brandHeader.style.marginBottom = '2.5rem';
+      brandHeader.style.transform    = 'scale(1)';
     }
 
-    function fadeOutProduct() {
-      if (!isProductShowing) return;
-      detailCard.classList.remove('opacity-100', 'translate-y-0');
-      detailCard.classList.add('opacity-0', 'translate-y-4');
+    function fadeOutProduct(cb) {
+      if (!isProductShowing) { if (cb) cb(); return; }
+      detailCard.style.opacity   = '0';
+      detailCard.style.transform = 'translateY(1rem)';
       isProductShowing = false;
-      
       setTimeout(() => {
-        if (!isProductShowing) detailCard.classList.add('hidden');
-      }, 600);
+        detailCard.classList.add('hidden');
+        if (cb) cb();
+      }, 500);
     }
 
-    // Reset interface entirely back to initialization state
     function resetToHome() {
       searchInput.value = '';
+      clearBtn.classList.add('hidden');
       resultsList.innerHTML = '';
       resultsList.classList.add('hidden');
-      footnote.classList.remove('opacity-0');
+      footnote.style.opacity = '1';
       fadeOutProduct();
       showLogo();
       layoutSpacer.style.height = '28vh';
@@ -137,17 +201,24 @@
 
     homeBtn.addEventListener('click', resetToHome);
 
-    // 1. User taps the search bar
+    clearBtn.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      searchInput.value = '';
+      clearBtn.classList.add('hidden');
+      resultsList.innerHTML = '';
+      resultsList.classList.add('hidden');
+      footnote.style.opacity = '1';
+      searchInput.focus();
+    });
+
     searchInput.addEventListener('focus', () => {
-      layoutSpacer.style.height = '4vh'; 
-      
+      layoutSpacer.style.height = '4vh';
       if (isProductShowing) {
         fadeOutProduct();
-        showLogo(); 
+        showLogo();
       }
     });
 
-    // 2. User clicks away without any items loaded
     searchInput.addEventListener('blur', () => {
       if (searchInput.value.trim() === '' && !isProductShowing) {
         layoutSpacer.style.height = '28vh';
@@ -157,49 +228,48 @@
 
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.trim();
-      
+      clearBtn.classList.toggle('hidden', query.length === 0);
       if (query.length < 2) {
         resultsList.innerHTML = '';
         resultsList.classList.add('hidden');
-        footnote.classList.remove('opacity-0');
+        footnote.style.opacity = '1';
         return;
       }
-
-      footnote.classList.add('opacity-0'); 
-      const searchResults = fuse.search(query);
-      displayResults(searchResults);
+      footnote.style.opacity = '0';
+      displayResults(fuse.search(query));
     });
 
     function displayResults(results) {
       resultsList.innerHTML = '';
-      
       if (results.length === 0) {
-        // Appears beautifully right below the bar now
-        resultsList.innerHTML = `<div class="p-4 text-xs text-[#8e8e93] text-center bg-white rounded-2xl border border-[#e8e8ed] shadow-sm">No items found</div>`;
+        resultsList.innerHTML = `
+          <div class="p-4 text-xs text-[#8e8e93] text-center bg-white rounded-2xl border border-[#e8e8ed] shadow-sm">
+            No products found
+          </div>`;
         resultsList.classList.remove('hidden');
         return;
       }
-
       resultsList.classList.remove('hidden');
-      
-      results.slice(0, 3).forEach(item => {
-        const product = item.item;
+      results.slice(0, 6).forEach(item => {
+        const p = item.item;
+        const { badgeClass, badgeText } = stockMeta(p.stock);
         const div = document.createElement('div');
-        div.className = "p-3 bg-white active:bg-[#f5f5f7] border border-[#e8e8ed] rounded-2xl cursor-pointer flex items-center justify-between shadow-sm transition-all";
-        
+        div.className = "result-row p-3 bg-white border border-[#e8e8ed] rounded-2xl cursor-pointer flex items-center justify-between shadow-sm transition-transform duration-150";
         div.innerHTML = `
-          <div class="flex items-center space-x-3.5">
-            <img src="${product.image}" class="w-9 h-9 object-contain bg-[#fafafa] rounded-lg p-0.5 mix-blend-multiply border border-[#f2f2f7]">
-            <div class="text-left">
-              <div class="text-xs font-semibold text-black">${product.name}</div>
-              <div class="text-[10px] text-[#8e8e93] font-mono tracking-wide">
-                ${product.sku} <span class="px-1 text-[#c7c7cc]">&bull;</span> <span class="capitalize">${product.colour}</span>
+          <div class="flex items-center space-x-3.5 min-w-0">
+            <img src="${p.image || ''}" onerror="this.src=''"
+              class="w-9 h-9 object-contain flex-shrink-0 bg-[#fafafa] rounded-lg p-0.5 mix-blend-multiply border border-[#f2f2f7]">
+            <div class="text-left min-w-0">
+              <div class="text-xs font-semibold text-black truncate">${p.name}</div>
+              <div class="text-[10px] text-[#8e8e93] font-mono tracking-wide truncate">
+                ${p.sku} &bull; <span class="capitalize">${p.colour}</span>
               </div>
             </div>
           </div>
-          <span class="text-[10px] text-black bg-[#f5f5f7] px-2 py-1 rounded-md font-medium">Qty: ${product.stock}</span>
+          <span class="flex-shrink-0 ml-2 text-[9px] font-semibold px-2 py-1 rounded-full ${badgeClass}">${badgeText}</span>
         `;
-        div.onclick = () => selectItem(product);
+        div.addEventListener('mousedown', (e) => e.preventDefault());
+        div.addEventListener('click', () => selectItem(p));
         resultsList.appendChild(div);
       });
     }
@@ -207,36 +277,54 @@
     function selectItem(product) {
       resultsList.classList.add('hidden');
       searchInput.value = '';
-      searchInput.blur(); 
-
+      clearBtn.classList.add('hidden');
+      searchInput.blur();
       hideLogo();
-      layoutSpacer.style.height = '4vh'; 
+      layoutSpacer.style.height = '4vh';
 
-      document.getElementById('detailImage').src = product.image;
-      document.getElementById('detailName').textContent = product.name;
-      document.getElementById('detailColour').textContent = product.colour;
-      document.getElementById('detailSku').textContent = product.sku;
-      document.getElementById('detailStock').textContent = product.stock;
-      document.getElementById('detailLocation').textContent = product.location;
-      
+      const { badgeClass, badgeText, displayStock } = stockMeta(product.stock);
+      const displayLocation = isNil(product.location) ? '—' : product.location;
+
+      document.getElementById('detailImage').src           = product.image || '';
+      document.getElementById('detailName').textContent    = product.name;
+      document.getElementById('detailColour').textContent  = product.colour;
+      document.getElementById('detailSku').textContent     = product.sku;
+      document.getElementById('detailStock').textContent   = displayStock;
+      document.getElementById('detailLocation').textContent = displayLocation;
+
+      const badge = document.getElementById('stockBadge');
+      badge.textContent = badgeText;
+      badge.className   = `inline-block mt-1 text-[9px] font-semibold px-1.5 py-0.5 rounded-full tracking-wide ${badgeClass}`;
+
+      document.getElementById('barcodeSkuLabel').textContent = product.sku;
+
       detailCard.classList.remove('hidden');
+      detailCard.style.opacity   = '0';
+      detailCard.style.transform = 'translateY(1rem)';
       isProductShowing = true;
-      
-      setTimeout(() => {
-        detailCard.classList.remove('opacity-0', 'translate-y-4');
-        detailCard.classList.add('opacity-100', 'translate-y-0');
-      }, 20);
 
-      JsBarcode("#barcodeTarget", product.sku, {
-        format: "CODE128",
-        lineColor: "#000000",
-        width: 2.0,
-        height: 60,
-        displayValue: false
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          detailCard.style.opacity   = '1';
+          detailCard.style.transform = 'translateY(0)';
+        });
       });
+
+      try {
+        JsBarcode("#barcodeTarget", product.sku, {
+          format: "CODE128",
+          lineColor: "#1c1c1e",
+          width: 1.8,
+          height: 56,
+          displayValue: false,
+          margin: 0,
+        });
+      } catch (err) {
+        document.getElementById('barcodeTarget').innerHTML = '';
+      }
     }
 
-    window.onload = initSearch;
+    window.addEventListener('load', initSearch);
   </script>
 </body>
 </html>
