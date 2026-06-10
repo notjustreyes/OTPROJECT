@@ -18,17 +18,16 @@
 </head>
 <body class="bg-[#f5f5f7] min-h-screen p-4 flex flex-col items-center select-none overflow-x-hidden">
 
-  <div id="layoutSpacer" class="h-[22vh] transition-all duration-500 ease-out"></div>
+  <div id="layoutSpacer" class="h-[28vh] transition-all duration-[600ms] ease-in-out w-full"></div>
 
-  <main id="mainContainer" class="w-full max-w-sm flex flex-col transition-all duration-500 ease-in-out">
+  <main id="mainContainer" class="w-full max-w-sm flex flex-col transition-all duration-[600ms] ease-in-out">
     
-    <div class="text-center mb-8 flex flex-col items-center">
+    <div class="text-center mb-10 flex flex-col items-center">
       <img 
-        src="https://images.seeklogo.com/logo-png/64/1/onitsuka-tiger-logo-png_seeklogo-649426.png" 
-        alt="Onitsuka Tiger Logo" 
-        class="w-16 h-16 object-contain mb-2 tracking-tight opacity-95"
+        src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Onitsuka_Tiger_logo.svg" 
+        alt="Onitsuka Tiger Official Logo" 
+        class="w-56 object-contain opacity-95"
       >
-      <h1 class="text-xl font-medium tracking-[0.2em] text-black uppercase">ONITSUKA TIGER</h1>
     </div>
 
     <div class="relative w-full mb-3">
@@ -96,9 +95,16 @@
     const layoutSpacer = document.getElementById('layoutSpacer');
     const footnote = document.getElementById('footnote');
 
-    // Handle smooth layout shift when interacting with the search bar
+    // 1. When the user taps the search bar, slide up smoothly
     searchInput.addEventListener('focus', () => {
-      layoutSpacer.style.height = '2vh'; // Slide smoothly up to the top
+      layoutSpacer.style.height = '4vh'; 
+    });
+
+    // 2. When the user clicks away, slide down ONLY IF the search bar is empty
+    searchInput.addEventListener('blur', () => {
+      if (searchInput.value.trim() === '') {
+        layoutSpacer.style.height = '28vh';
+      }
     });
 
     searchInput.addEventListener('input', (e) => {
@@ -111,7 +117,7 @@
         return;
       }
 
-      footnote.classList.add('opacity-0'); // Cleanly hide details label while showing choices
+      footnote.classList.add('opacity-0'); 
       const searchResults = fuse.search(query);
       displayResults(searchResults);
     });
@@ -149,9 +155,8 @@
     function selectItem(product) {
       resultsList.classList.add('hidden');
       searchInput.value = '';
-      searchInput.blur(); // Dismisses phone soft-keyboard
+      searchInput.blur(); // Dismisses phone soft-keyboard, triggers the slide-down
 
-      // Map details metrics
       document.getElementById('detailImage').src = product.image;
       document.getElementById('detailName').textContent = product.name;
       document.getElementById('detailColour').textContent = product.colour;
@@ -161,7 +166,6 @@
       
       detailCard.classList.remove('hidden');
 
-      // Generate pristine context barcode vectors 
       JsBarcode("#barcodeTarget", product.sku, {
         format: "CODE128",
         lineColor: "#000000",
