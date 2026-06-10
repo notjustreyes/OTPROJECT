@@ -15,7 +15,7 @@ const inventoryData = [
     image: "https://images.asics.com/is/image/asics/1183C123_202_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp",
     stock: "NIL",
     location: "NIL"
-  }
+  },
 
   {
     sku: "1183C659-250",
