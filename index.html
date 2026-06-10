@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tiger Stock Checker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</head>
+<body class="bg-stone-100 font-sans min-h-screen p-3 flex flex-col items-center select-none">
+
+  <main class="w-full max-w-md bg-white shadow-xl rounded-2xl p-5 border border-stone-200 mt-2">
+    <div class="text-center mb-5">
+      <h1 class="text-2xl font-black tracking-wider text-stone-900 uppercase">🐅 Tiger Stock</h1>
+      <p class="text-xs text-stone-500 font-medium">Quick Scan & Inventory Search</p>
+    </div>
+
+    <div class="relative mb-4">
+      <input 
+        type="text" 
+        id="searchInput" 
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="Search model, color, or SKU..." 
+        class="w-full px-4 py-3.5 bg-stone-50 border border-stone-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all text-base text-stone-800 placeholder-stone-400 shadow-inner"
+      >
+    </div>
+
+    <div id="resultsList" class="space-y-2 max-h-72 overflow-y-auto mb-4 hidden"></div>
+
+    <div id="detailCard" class="border border-stone-200 rounded-2xl p-4 bg-stone-50 flex flex-col items-center hidden animate-fade-in">
+      
+      <div class="w-40 h-40 bg-white rounded-xl border border-stone-100 flex items-center justify-center p-2 shadow-sm mb-3 overflow-hidden">
+        <img id="detailImage" src="" alt="Shoe Preview" class="object-contain max-w-full max-h-full">
+      </div>
+
+      <h2 id="detailName" class="text-xl font-bold text-stone-900"></h2>
+      <p id="detailColour" class="text-sm font-medium text-stone-600 capitalize mb-1"></p>
+      <p id="detailSku" class="text-xs text-stone-400 font-mono tracking-wider mb-4"></p>
+      
+      <div class="grid grid-cols-2 gap-3 w-full mb-4">
+        <div class="bg-white p-3 rounded-xl border border-stone-100 text-center shadow-sm">
+          <span class="block text-[10px] text-stone-400 uppercase font-bold tracking-widest">Available Stock</span>
+          <span id="detailStock" class="text-xl font-black text-amber-600"></span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-stone-100 text-center shadow-sm">
+          <span class="block text-[10px] text-stone-400 uppercase font-bold tracking-widest">Storage Location</span>
+          <span id="detailLocation" class="text-sm font-bold text-stone-700 block mt-1"></span>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl w-full flex justify-center items-center shadow-sm border border-stone-100">
+        <svg id="barcodeTarget" class="max-w-full"></svg>
+      </div>
+    </div>
+  </main>
+
+  <script src="products.js"></script>
+
+  <script>
+    let fuse;
+
+    function initSearch() {
+      const options = {
+        // Allows searching across the title, specific code, or colorway
+        keys: ['name', 'sku', 'colour'],
+        threshold: 0.35 // Tuned for accurate one-off letter typos on virtual keyboards
+      };
+      fuse = new Fuse(inventoryData, options);
+    }
+
+    const searchInput = document.getElementById('searchInput');
+    const resultsList = document.getElementById('resultsList');
+    const detailCard = document.getElementById('detailCard');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.trim();
+      
+      if (query.length < 2) {
+        resultsList.innerHTML = '';
+        resultsList.classList.add('hidden');
+        return;
+      }
+
+      const searchResults = fuse.search(query);
+      displayResults(searchResults);
+    });
+
+    function displayResults(results) {
+      resultsList.innerHTML = '';
+      
+      if (results.length === 0) {
+        resultsList.innerHTML = `<div class="p-4 text-sm text-stone-400 text-center bg-white rounded-xl border border-stone-200">No matching footwear found</div>`;
+        resultsList.classList.remove('hidden');
+        return;
+      }
+
+      resultsList.classList.remove('hidden');
+      
+      results.slice(0, 4).forEach(item => {
+        const product = item.item;
+        const div = document.createElement('div');
+        // Extra large padding and layout for precise thumb taps on the go
+        div.className = "p-3 bg-white active:bg-stone-100 border border-stone-200 rounded-xl cursor-pointer flex items-center justify-between shadow-sm transition-all";
+        div.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <img src="${product.image}" class="w-10 h-10 object-contain bg-stone-50 rounded border p-0.5">
+            <div>
+              <div class="text-sm font-bold text-stone-800">${product.name}</div>
+              <div class="text-xs text-stone-500 font-mono">${product.sku}</div>
+            </div>
+          </div>
+          <span class="bg-stone-100 text-stone-700 text-xs px-2.5 py-1.5 rounded-lg font-bold">Qty: ${product.stock}</span>
+        `;
+        div.onclick = () => selectItem(product);
+        resultsList.appendChild(div);
+      });
+    }
+
+    function selectItem(product) {
+      resultsList.classList.add('hidden');
+      searchInput.value = '';
+
+      // Populate interactive display elements
+      document.getElementById('detailImage').src = product.image;
+      document.getElementById('detailName').textContent = product.name;
+      document.getElementById('detailColour').textContent = product.colour;
+      document.getElementById('detailSku').textContent = product.sku;
+      document.getElementById('detailStock').textContent = product.stock;
+      document.getElementById('detailLocation').textContent = product.location;
+      
+      detailCard.classList.remove('hidden');
+
+      // Generate pristine Code128 format barcode handling hyphens elegantly
+      JsBarcode("#barcodeTarget", product.sku, {
+        format: "CODE128",
+        lineColor: "#1c1917", // Match stone-900 aesthetic
+        width: 2.2,
+        height: 65,
+        displayValue: false // Kept false so barcode graphics are as large and scannable as possible on narrow mobile viewports
+      });
+    }
+
+    window.onload = initSearch;
+  </script>
+</body>
+</html>

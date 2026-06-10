@@ -1,0 +1,19 @@
+// products.js
+const inventoryData = [
+  {
+    sku: "1183B603-202",
+    name: "Mexico 66 SLIP-ON",
+    colour: "dark brown/dark brown",
+    image: "https://images.asics.com/is/image/asics/1183B603_202_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp",
+    stock: 12,
+    location: "Row A, Shelf 2"
+  },
+  {
+    sku: "1183C123-202",
+    name: "Mexico 66 SABOT",
+    colour: "dark brown/dark brown",
+    image: "https://images.asics.com/is/image/asics/1183C123_202_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp",
+    stock: 5,
+    location: "Row B, Shelf 1"
+  }
+];
