@@ -20,17 +20,15 @@
 
   <div id="layoutSpacer" class="h-[28vh] transition-all duration-[600ms] ease-in-out w-full"></div>
 
-  <main id="mainContainer" class="w-full max-w-sm flex flex-col transition-all duration-[600ms] ease-in-out">
+  <main id="mainContainer" class="w-full max-w-sm flex flex-col transition-all duration-[600ms] ease-in-out relative">
     
-    <div class="text-center mb-10 flex flex-col items-center">
-      <img 
-        src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Onitsuka_Tiger_logo.svg" 
-        alt="Onitsuka Tiger Official Logo" 
-        class="w-56 object-contain opacity-95"
-      >
+    <div id="brandHeader" class="flex flex-col items-center transition-all duration-[600ms] ease-in-out transform origin-top overflow-hidden max-h-24 opacity-100 mb-10 scale-100">
+      <h1 class="text-3xl font-black tracking-tighter text-black uppercase" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+        Onitsuka Tiger
+      </h1>
     </div>
 
-    <div class="relative w-full mb-3">
+    <div class="relative w-full mb-3 z-10">
       <input 
         type="text" 
         id="searchInput" 
@@ -39,7 +37,7 @@
         autocapitalize="off"
         spellcheck="false"
         placeholder="Search product..." 
-        class="w-full px-5 py-3.5 bg-[#e8e8ed] focus:bg-white border border-transparent focus:border-black rounded-full focus:outline-none transition-all duration-300 text-base text-black placeholder-[#8e8e93] text-center font-normal tracking-wide shadow-sm"
+        class="w-full px-5 py-3.5 bg-[#e8e8ed] focus:bg-white border border-transparent focus:border-black rounded-full focus:outline-none transition-all duration-[600ms] ease-in-out text-base text-black placeholder-[#8e8e93] text-center font-normal tracking-wide shadow-sm"
       >
     </div>
 
@@ -47,9 +45,9 @@
       Search product via product name / SKU / colour
     </p>
 
-    <div id="resultsList" class="space-y-2 max-h-64 overflow-y-auto mb-6 hidden"></div>
+    <div id="resultsList" class="space-y-2 max-h-64 overflow-y-auto mb-6 hidden absolute top-[70px] left-0 w-full z-20"></div>
 
-    <div id="detailCard" class="w-full bg-white rounded-[24px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-[#e8e8ed] flex flex-col items-center hidden transition-all">
+    <div id="detailCard" class="w-full bg-white rounded-[24px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-[#e8e8ed] flex flex-col items-center transition-all duration-[600ms] ease-in-out opacity-0 translate-y-4 hidden z-0">
       
       <div class="w-48 h-48 bg-[#fafafa] rounded-2xl flex items-center justify-center p-3 mb-5 overflow-hidden">
         <img id="detailImage" src="" alt="Footwear Model" class="object-contain max-w-full max-h-full mix-blend-multiply">
@@ -80,6 +78,8 @@
 
   <script>
     let fuse;
+    // Track if a product is currently being displayed
+    let isProductShowing = false; 
 
     function initSearch() {
       const options = {
@@ -94,16 +94,46 @@
     const detailCard = document.getElementById('detailCard');
     const layoutSpacer = document.getElementById('layoutSpacer');
     const footnote = document.getElementById('footnote');
+    const brandHeader = document.getElementById('brandHeader');
 
-    // 1. When the user taps the search bar, slide up smoothly
+    // Smooth UI State Controllers
+    function hideLogo() {
+      brandHeader.classList.remove('max-h-24', 'opacity-100', 'mb-10', 'scale-100');
+      brandHeader.classList.add('max-h-0', 'opacity-0', 'mb-0', 'scale-95');
+    }
+
+    function showLogo() {
+      brandHeader.classList.remove('max-h-0', 'opacity-0', 'mb-0', 'scale-95');
+      brandHeader.classList.add('max-h-24', 'opacity-100', 'mb-10', 'scale-100');
+    }
+
+    function fadeOutProduct() {
+      if (!isProductShowing) return;
+      detailCard.classList.remove('opacity-100', 'translate-y-0');
+      detailCard.classList.add('opacity-0', 'translate-y-4');
+      isProductShowing = false;
+      
+      // Wait for the fade out to complete before hiding the div entirely
+      setTimeout(() => {
+        if (!isProductShowing) detailCard.classList.add('hidden');
+      }, 600);
+    }
+
+    // 1. User taps the search bar
     searchInput.addEventListener('focus', () => {
       layoutSpacer.style.height = '4vh'; 
+      
+      if (isProductShowing) {
+        fadeOutProduct();
+        showLogo(); // Bring the logo back to reset the 'empty' state
+      }
     });
 
-    // 2. When the user clicks away, slide down ONLY IF the search bar is empty
+    // 2. User clicks away without a product selected
     searchInput.addEventListener('blur', () => {
-      if (searchInput.value.trim() === '') {
+      if (searchInput.value.trim() === '' && !isProductShowing) {
         layoutSpacer.style.height = '28vh';
+        showLogo();
       }
     });
 
@@ -136,13 +166,17 @@
       results.slice(0, 3).forEach(item => {
         const product = item.item;
         const div = document.createElement('div');
-        div.className = "p-3 bg-white active:bg-[#f5f5f7] border border-[#e8e8ed] rounded-2xl cursor-pointer flex items-center justify-between shadow-sm transition-all";
+        div.className = "p-3 bg-white active:bg-[#f5f5f7] border border-[#e8e8ed] rounded-2xl cursor-pointer flex items-center justify-between shadow-sm transition-all mb-2";
+        
+        // Appended the product colour dynamically next to the SKU
         div.innerHTML = `
           <div class="flex items-center space-x-3.5">
             <img src="${product.image}" class="w-9 h-9 object-contain bg-[#fafafa] rounded-lg p-0.5 mix-blend-multiply border border-[#f2f2f7]">
             <div class="text-left">
               <div class="text-xs font-semibold text-black">${product.name}</div>
-              <div class="text-[10px] text-[#8e8e93] font-mono tracking-wide">${product.sku}</div>
+              <div class="text-[10px] text-[#8e8e93] font-mono tracking-wide">
+                ${product.sku} <span class="capitalize px-1 text-[#c7c7cc]">&bull;</span> <span class="capitalize">${product.colour}</span>
+              </div>
             </div>
           </div>
           <span class="text-[10px] text-black bg-[#f5f5f7] px-2 py-1 rounded-md font-medium">Qty: ${product.stock}</span>
@@ -153,10 +187,16 @@
     }
 
     function selectItem(product) {
+      // Clean up the search UI
       resultsList.classList.add('hidden');
       searchInput.value = '';
-      searchInput.blur(); // Dismisses phone soft-keyboard, triggers the slide-down
+      searchInput.blur(); 
 
+      // Trigger the new layout transitions
+      hideLogo();
+      layoutSpacer.style.height = '4vh'; 
+
+      // Load data
       document.getElementById('detailImage').src = product.image;
       document.getElementById('detailName').textContent = product.name;
       document.getElementById('detailColour').textContent = product.colour;
@@ -164,7 +204,15 @@
       document.getElementById('detailStock').textContent = product.stock;
       document.getElementById('detailLocation').textContent = product.location;
       
+      // Fade the product card in smoothly
       detailCard.classList.remove('hidden');
+      isProductShowing = true;
+      
+      // Tiny delay ensures the display:block registers before opacity animates
+      setTimeout(() => {
+        detailCard.classList.remove('opacity-0', 'translate-y-4');
+        detailCard.classList.add('opacity-100', 'translate-y-0');
+      }, 20);
 
       JsBarcode("#barcodeTarget", product.sku, {
         format: "CODE128",
