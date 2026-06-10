@@ -16,4 +16,13 @@ const inventoryData = [
     stock: "NIL",
     location: "NIL"
   }
+
+  {
+    sku: "1183C659-250",
+    name: "EDR 78",
+    colour: "beige/beet juice",
+    image: "https://images.asics.com/is/image/asics/1183C659_250_SR_RT_GLB?qlt=100&wid=1024&hei=768&bgc=255,255,255&resMode=bisharp",
+    stock: "NIL",
+    location: "NIL"
+  }
 ];
