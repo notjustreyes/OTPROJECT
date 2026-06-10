@@ -112,11 +112,18 @@
         </div>
       </div>
 
-      <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2">
+      <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2 mb-2">
         <span id="barcodeSkuLabel"
           class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] uppercase font-medium select-all">
         </span>
         <svg id="barcodeTarget" class="max-w-[90%]"></svg>
+      </div>
+
+      <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2">
+        <span id="barcodeSkuLabel2"
+          class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] uppercase font-medium select-all">
+        </span>
+        <svg id="barcodeTarget2" class="max-w-[90%]"></svg>
       </div>
     </div>
 
@@ -298,6 +305,9 @@
 
       document.getElementById('barcodeSkuLabel').textContent = 'SKU: ' + product.sku;
 
+      const dotSku = product.sku.replace(/-/g, '.');
+      document.getElementById('barcodeSkuLabel2').textContent = 'SKU: ' + dotSku;
+
       detailCard.classList.remove('hidden');
       detailCard.style.opacity   = '0';
       detailCard.style.transform = 'translateY(1rem)';
@@ -322,10 +332,22 @@
       } catch (err) {
         document.getElementById('barcodeTarget').innerHTML = '';
       }
+
+      try {
+        JsBarcode("#barcodeTarget2", dotSku, {
+          format: "CODE128",
+          lineColor: "#1c1c1e",
+          width: 1.8,
+          height: 56,
+          displayValue: false,
+          margin: 0,
+        });
+      } catch (err) {
+        document.getElementById('barcodeTarget2').innerHTML = '';
+      }
     }
 
     window.addEventListener('load', initSearch);
   </script>
 </body>
 </html>
-
