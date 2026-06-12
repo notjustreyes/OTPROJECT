@@ -134,5 +134,37 @@ const inventoryData = [
     "stock": "NIL",
     "location": "NIL",
     "image": "https://images.asics.com/is/image/asics/1183C577_100_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1182A708-700",
+    "name": "MEXICO 66 TGRS",
+    "colour": "Classic Red/Cream",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1182A708_700_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1182A708-020",
+    "name": "MEXICO 66 TGRS",
+    "colour": "Gunmetal/Metropilos",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1182A708_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1182A708-250",
+    "name": "MEXICO 66 TGRS",
+    "colour": "Champagne/Cream",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1182A708_250_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1182A708-701",
+    "name": "MEXICO 66 TGRS",
+    "colour": "Crystal Pink/Cream",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1182A708_701_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   }
 ];
