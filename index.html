@@ -19,7 +19,6 @@
     #resultsList::-webkit-scrollbar { width: 3px; }
     #resultsList::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 99px; }
 
-    /* Updated focus handling to wrapper */
     #searchRow:focus-within { background: #fff; box-shadow: 0 0 0 1.5px #000; }
     #searchRow #searchInput { flex: 1; min-width: 0; text-align: left; }
     #searchRow #searchInput:focus { outline: none; }
@@ -44,7 +43,6 @@
     .badge-out { background:#fce4ec; color:#c62828; }
     .badge-nil { background:#f2f2f7; color:#8e8e93; }
 
-    /* Mode toggle */
     .mode-btn {
       transition: background 200ms, color 200ms;
       -webkit-tap-highlight-color: transparent;
@@ -52,13 +50,11 @@
     .mode-btn.active { background: #000; color: #fff; }
     .mode-btn:not(.active) { background: #e8e8ed; color: #3a3a3c; }
 
-    /* Filter panel */
     #filterPanel {
       transition: max-height 500ms cubic-bezier(0.4,0,0.2,1), opacity 400ms ease;
       overflow: hidden;
     }
 
-    /* Section label */
     .section-label {
       font-size: 10px;
       font-weight: 700;
@@ -68,7 +64,6 @@
       margin-bottom: 8px;
     }
 
-    /* Bubble chips */
     .bubble {
       display: inline-flex;
       align-items: center;
@@ -95,7 +90,6 @@
     }
     .bubble .bx { font-size: 14px; opacity: 0.65; margin-left: 1px; line-height: 1; }
 
-    /* Scrollable row for bubbles */
     .bubble-row {
       display: flex;
       flex-wrap: wrap;
@@ -103,7 +97,6 @@
       padding-bottom: 2px;
     }
 
-    /* Applied chip in search bar */
     .achip {
       display: inline-flex; align-items: center; gap: 4px;
       padding: 4px 10px; border-radius: 99px;
@@ -115,10 +108,8 @@
     .achip:active { opacity: 0.7; }
     .achip .cx { font-size: 13px; opacity: 0.7; }
 
-    /* Results */
     #resultsList { scrollbar-width: thin; }
 
-    /* Back button (inside detail card) */
     #backBtn {
       position: absolute;
       top: 16px; left: 16px;
@@ -133,7 +124,6 @@
     }
     #backBtn:active { background: #e0e0e5; }
 
-    /* Divider line */
     .filter-divider {
       height: 1px;
       background: #f0f0f5;
@@ -254,7 +244,6 @@
 
   <script src="products.js"></script>
   <script>
-    /* ─── Helpers ─── */
     function isNil(val) {
       return val === undefined || val === null || String(val).trim().toUpperCase() === 'NIL' || String(val).trim() === '';
     }
@@ -268,14 +257,12 @@
       return                 { qty, badgeClass: 'badge-in',  badgeText: 'In stock',     displayStock: String(qty) };
     }
 
-    /* Split SKU into [productCode, colourCode] */
     function splitSku(sku) {
       const idx = sku.lastIndexOf('-');
       if (idx === -1) return [sku, null];
       return [sku.slice(0, idx), sku.slice(idx + 1)];
     }
 
-    /* ─── Shoe type bubbles ─── */
     const SHOE_TYPES = [
       'MEXICO 66', 'MEXICO 66 SD', 'MEXICO 66 PF', 'MEXICO 66 SABOT',
       'MEXICO 66 SLIP ON', 'MEXICO 66 PARATY', 'MEXICO 66 VINY',
@@ -291,7 +278,6 @@
       'REBILAC SANDAL', 'TSUNAHIKI SLIP ON'
     ];
 
-    /* ─── Colour groups — expanded for Onitsuka naming ─── */
     const COLOUR_GROUPS = [
       { label: 'White',    aliases: ['white','cream','ivory','blanc','off-white','snow','milk','chalk','pearl','birch'] },
       { label: 'Black',    aliases: ['black','noir','onyx','jet','ebony','charcoal','midnight','pitch'] },
@@ -308,16 +294,13 @@
       { label: 'Multi',    aliases: ['multi','mix','rainbow','colorful','colourful','patterned','tie-dye','tiedye','print','camo','camouflage','floral','stripe','check','plaid','graphic','abstract'] },
     ];
 
-    /* ─── State ─── */
     let fuse;
     let isProductShowing = false;
     let currentMode = 1;
     let activeTypeFilter   = null;
     let activeColourFilter = null;
-    // Snapshot of results shown before product was opened (for back button)
     let lastFilterResults  = null;
 
-    /* ─── DOM refs ─── */
     const searchInput    = document.getElementById('searchInput');
     const clearBtn       = document.getElementById('clearBtn');
     const resultsList    = document.getElementById('resultsList');
@@ -334,7 +317,6 @@
     const filterCountText= document.getElementById('filterCountText');
     const activeFiltersEl= document.getElementById('activeFilters');
 
-    /* ─── Init ─── */
     function initSearch() {
       fuse = new Fuse(inventoryData, {
         keys: ['name','sku','colour'],
@@ -346,7 +328,6 @@
       renderColourBubbles();
     }
 
-    /* ─── Logo helpers ─── */
     function hideLogo() {
       brandHeader.style.maxHeight    = '0px';
       brandHeader.style.opacity      = '0';
@@ -360,7 +341,6 @@
       brandHeader.style.transform    = 'scale(1)';
     }
 
-    /* ─── Product card show/hide ─── */
     function fadeOutProduct(cb) {
       if (!isProductShowing) { if (cb) cb(); return; }
       detailCard.style.opacity   = '0';
@@ -372,7 +352,6 @@
       }, 400);
     }
 
-    /* ─── Back button: return to filter results ─── */
     backBtn.addEventListener('click', () => {
       fadeOutProduct(() => {
         if (currentMode === 2 && lastFilterResults !== null) {
@@ -383,7 +362,6 @@
       });
     });
 
-    /* ─── Mode switching ─── */
     function setMode(m) {
       currentMode = m;
       document.getElementById('modeBtn1').classList.toggle('active', m === 1);
@@ -420,24 +398,22 @@
       clearBtn.classList.add('hidden');
     }
 
-    /* ─── Dynamic Sorting Logic ─── */
     function getSortedModels() {
       const counts = {};
       inventoryData.forEach(p => {
-        counts[p.name] = (counts[p.name] || 0) + 1;
+        const normName = (p.name || '').trim().toUpperCase();
+        counts[normName] = (counts[normName] || 0) + 1;
       });
 
       let models = [...SHOE_TYPES];
 
-      // Popularity
       models.sort((a, b) => {
         if (a === activeTypeFilter || b === activeTypeFilter) return 0;
-        const aCount = counts[a] || 0;
-        const bCount = counts[b] || 0;
+        const aCount = counts[a.toUpperCase()] || 0;
+        const bCount = counts[b.toUpperCase()] || 0;
         return bCount - aCount;
       });
 
-      // Search relevance
       const query = searchInput.value.trim().toUpperCase();
       if (query.length >= 2) {
         models.sort((a, b) => {
@@ -449,7 +425,6 @@
         });
       }
 
-      // Selected model always first
       models.sort((a, b) => {
         if (a === activeTypeFilter) return -1;
         if (b === activeTypeFilter) return 1;
@@ -462,7 +437,8 @@
     function getSortedColours() {
       let pool = inventoryData;
       if (activeTypeFilter) {
-        pool = pool.filter(p => p.name === activeTypeFilter || (p.name || '').toUpperCase().includes(activeTypeFilter.toUpperCase()));
+        const tf = activeTypeFilter.toUpperCase();
+        pool = pool.filter(p => (p.name || '').trim().toUpperCase() === tf);
       }
 
       return [...COLOUR_GROUPS]
@@ -481,11 +457,13 @@
         });
     }
 
-    /* ─── Bubble rendering ─── */
     function renderTypeBubbles() {
       typeBubblesEl.innerHTML = '';
       getSortedModels().forEach(type => {
-        const count = inventoryData.filter(p => p.name === type).length;
+        const count = inventoryData.filter(
+          p => (p.name || '').trim().toUpperCase() === type.toUpperCase()
+        ).length;
+        
         const btn = document.createElement('button');
         const isSel = activeTypeFilter === type;
         btn.className = 'bubble' + (isSel ? ' sel' : '');
@@ -519,7 +497,6 @@
       });
     }
 
-    /* ─── Active Filter Chips Inside Search Bar ─── */
     function renderActiveFilters() {
       activeFiltersEl.innerHTML = '';
       if (activeTypeFilter) {
@@ -538,7 +515,6 @@
       }
     }
 
-    /* ─── Filter toggles ─── */
     function toggleTypeFilter(type) {
       activeTypeFilter = (activeTypeFilter === type) ? null : type;
       renderActiveFilters();
@@ -554,7 +530,6 @@
       runFilteredSearch();
     }
 
-    /* ─── Core: filter + optional text ─── */
     function runFilteredSearch() {
       const query = searchInput.value.trim();
       const hasFilters = activeTypeFilter || activeColourFilter;
@@ -574,10 +549,7 @@
 
       if (activeTypeFilter) {
         const tf = activeTypeFilter.toUpperCase();
-        pool = pool.filter(p => {
-          const name = (p.name || '').toUpperCase();
-          return name === tf || name.startsWith(tf + ' ') || name.includes(' ' + tf + ' ') || name.endsWith(' ' + tf);
-        });
+        pool = pool.filter(p => (p.name || '').trim().toUpperCase() === tf);
       }
 
       if (activeColourFilter) {
@@ -604,7 +576,6 @@
       lastFilterResults = results;
       displayResultsRaw(results);
 
-      // Show count
       if (currentMode === 2) {
         const n = results.length;
         filterCountText.textContent = n === 0 ? 'No products match' : `${n} product${n > 1 ? 's' : ''} found`;
@@ -612,7 +583,6 @@
       }
     }
 
-    /* ─── Display helpers ─── */
     function displayResultsRaw(items) {
       resultsList.innerHTML = '';
       if (items.length === 0) {
@@ -624,7 +594,6 @@
         return;
       }
       resultsList.classList.remove('hidden');
-      // In filter mode show up to 12; in search mode up to 6/8
       const cap = currentMode === 2 ? 12 : 8;
       items.slice(0, cap).forEach(p => {
         const { badgeClass, badgeText } = stockMeta(p.stock);
@@ -649,7 +618,6 @@
       });
     }
 
-    /* ─── Select product ─── */
     function selectItem(product) {
       resultsList.classList.add('hidden');
       filterCount.classList.add('hidden');
@@ -673,12 +641,10 @@
       badge.textContent = badgeText;
       badge.className   = `inline-block mt-1 text-[9px] font-semibold px-1.5 py-0.5 rounded-full tracking-wide ${badgeClass}`;
 
-      // Split SKU for barcodes
       const [productCode, colourCode] = splitSku(product.sku);
       document.getElementById('barcodeLabel1').textContent = productCode;
       document.getElementById('barcodeLabel2').textContent = colourCode || '—';
 
-      // Show back button only in filter mode
       if (currentMode === 2) {
         backBtn.classList.remove('hidden');
       } else {
@@ -712,7 +678,6 @@
       }
     }
 
-    /* ─── Reset to home ─── */
     function resetToHome() {
       searchInput.value = '';
       clearBtn.classList.add('hidden');
@@ -738,7 +703,6 @@
 
     homeBtn.addEventListener('click', resetToHome);
 
-    /* ─── Clear button ─── */
     clearBtn.addEventListener('mousedown', e => {
       e.preventDefault();
       searchInput.value = '';
@@ -753,7 +717,6 @@
       searchInput.focus();
     });
 
-    /* ─── Input focus/blur ─── */
     searchInput.addEventListener('focus', () => {
       layoutSpacer.style.height = '4vh';
       if (isProductShowing && currentMode === 1) {
@@ -769,7 +732,6 @@
       }
     });
 
-    /* ─── Input handler ─── */
     searchInput.addEventListener('input', e => {
       const query = e.target.value.trim();
       clearBtn.classList.toggle('hidden', query.length === 0);
