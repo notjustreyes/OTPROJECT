@@ -70,5 +70,54 @@ const inventoryData = [
     "stock": "NIL",
     "location": "NIL",
     "image": "https://images.asics.com/is/image/asics/1183C102_105_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C557-001",
+    "name": "MEXICO 66 GOLF",
+    "colour": "Black/Dragon Fruit",
+    "stock": "NIL",
+    "location": "NIL",
+    "__EMPTY": "golf",
+    "image": "https://images.asics.com/is/image/asics/1183C557_001_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C557-101",
+    "name": "MEXICO 66 GOLF",
+    "colour": "Off-White/Pure Silver",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C557_101_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C557-750",
+    "name": "MEXICO 66 GOLF",
+    "colour": "Yellow/Black",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C557_750_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C557-100",
+    "name": "MEXICO 66 GOLF",
+    "colour": "Off-White/Off-White",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C557_100_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C557-002",
+    "name": "MEXICO 66 GOLF",
+    "colour": "Black /White",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C557_002_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C557-020",
+    "name": "MEXICO 66 GOLF",
+    "colour": "Pure Silver/Pure Silver",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C557_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   }
 ];
