@@ -263,20 +263,8 @@
       return [sku.slice(0, idx), sku.slice(idx + 1)];
     }
 
-    const SHOE_TYPES = [
-      'MEXICO 66', 'MEXICO 66 SD', 'MEXICO 66 PF', 'MEXICO 66 SABOT',
-      'MEXICO 66 SLIP ON', 'MEXICO 66 PARATY', 'MEXICO 66 VINY',
-      'MEXICO 66 SD VIN', 'MEXICO 66 SD PARATY',
-      'SERRANO', 'SERRANO SLIP ON',
-      'CALIFORNIA 78', 'CALIFORNIA 78 EX', 'CALIFORNIA 78 VIN',
-      'GSM', 'GSM SD',
-      'CORSAIR', 'CORSAIR A55',
-      'TIGRUN', 'TIGTRAIL', 'TIGCOURT', 'TGRS',
-      'ROTEMIT', 'EDR 78', 'TOKUTEN',
-      'NIPPON MADE', 'GOLF', 'DELEGATION',
-      'OHBORI STRAP', 'OHBORI SLIDER 2.0',
-      'REBILAC SANDAL', 'TSUNAHIKI SLIP ON'
-    ];
+    // Generated dynamically at runtime from inventoryData
+    let SHOE_TYPES = [];
 
     const COLOUR_GROUPS = [
       { label: 'White',    aliases: ['white','cream','ivory','blanc','off-white','snow','milk','chalk','pearl','birch'] },
@@ -317,7 +305,35 @@
     const filterCountText= document.getElementById('filterCountText');
     const activeFiltersEl= document.getElementById('activeFilters');
 
+    function resolveProductType(productName) {
+      const name = (productName || '')
+        .trim()
+        .toUpperCase()
+        .replace(/-/g, ' ');
+
+      const matches = SHOE_TYPES.filter(type =>
+        name.includes(type.toUpperCase().replace(/-/g, ' '))
+      );
+
+      if (matches.length > 0) {
+        return matches.reduce((longest, current) =>
+          current.length > longest.length ? current : longest
+        );
+      }
+
+      return name || null;
+    }
+
     function initSearch() {
+      // Dynamic generation of catalogs directly from actual available inventory items
+      const modelsFound = new Set();
+      inventoryData.forEach(p => {
+        if (p.name) {
+          modelsFound.add(p.name.trim().toUpperCase().replace(/-/g, ' '));
+        }
+      });
+      SHOE_TYPES = Array.from(modelsFound);
+
       fuse = new Fuse(inventoryData, {
         keys: ['name','sku','colour'],
         threshold: 0.35,
@@ -398,30 +414,29 @@
       clearBtn.classList.add('hidden');
     }
 
-    // Resolves what official SHOE_TYPE an inventory item belongs to based on the longest matching substring
-    function resolveProductType(productName) {
-      const name = (productName || '').trim().toUpperCase();
-      const matches = SHOE_TYPES.filter(type => name.includes(type.toUpperCase()));
-      if (matches.length > 0) {
-        // Return the longest matched string block (handles specific variants like "MEXICO 66 SABOT" safely over "MEXICO 66")
-        return matches.reduce((longest, current) => current.length > longest.length ? current : longest).toUpperCase();
-      }
-      return name;
+    function buildModelCounts() {
+      const counts = {};
+      SHOE_TYPES.forEach(type => {
+        counts[type] = 0;
+      });
+
+      inventoryData.forEach(product => {
+        const resolved = resolveProductType(product.name);
+        if (resolved && counts.hasOwnProperty(resolved)) {
+          counts[resolved]++;
+        }
+      });
+      return counts;
     }
 
     function getSortedModels() {
-      const counts = {};
-      inventoryData.forEach(p => {
-        const resolvedType = resolveProductType(p.name);
-        counts[resolvedType] = (counts[resolvedType] || 0) + 1;
-      });
-
+      const counts = buildModelCounts();
       let models = [...SHOE_TYPES];
 
       models.sort((a, b) => {
         if (a === activeTypeFilter || b === activeTypeFilter) return 0;
-        const aCount = counts[a.toUpperCase()] || 0;
-        const bCount = counts[b.toUpperCase()] || 0;
+        const aCount = counts[a] || 0;
+        const bCount = counts[b] || 0;
         return bCount - aCount;
       });
 
@@ -470,24 +485,25 @@
 
     function renderTypeBubbles() {
       typeBubblesEl.innerHTML = '';
-      getSortedModels().forEach(type => {
-        const count = inventoryData.filter(
-          p => resolveProductType(p.name) === type.toUpperCase()
-        ).length;
-        
-        const btn = document.createElement('button');
-        const isSel = activeTypeFilter === type;
-        btn.className = 'bubble' + (isSel ? ' sel' : '');
-        btn.textContent = `${type} (${count})`;
-        
-        if (isSel) {
-          const x = document.createElement('span');
-          x.className = 'bx'; x.textContent = '×';
-          btn.appendChild(x);
-        }
-        btn.addEventListener('click', () => toggleTypeFilter(type));
-        typeBubblesEl.appendChild(btn);
-      });
+      const counts = buildModelCounts();
+
+      getSortedModels()
+        .filter(type => (counts[type] || 0) > 0)
+        .forEach(type => {
+          const count = counts[type] || 0;
+          const btn = document.createElement('button');
+          const isSel = activeTypeFilter === type;
+          btn.className = 'bubble' + (isSel ? ' sel' : '');
+          btn.textContent = `${type} (${count})`;
+          
+          if (isSel) {
+            const x = document.createElement('span');
+            x.className = 'bx'; x.textContent = '×';
+            btn.appendChild(x);
+          }
+          btn.addEventListener('click', () => toggleTypeFilter(type));
+          typeBubblesEl.appendChild(btn);
+        });
     }
 
     function renderColourBubbles() {
