@@ -14,9 +14,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    #layoutSpacer {
-      transition: height 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    #layoutSpacer { transition: height 600ms cubic-bezier(0.4, 0, 0.2, 1); }
 
     #resultsList::-webkit-scrollbar { width: 3px; }
     #resultsList::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 99px; }
@@ -27,8 +25,8 @@
     .result-row:active { transform: scale(0.985); }
 
     #detailCard {
-      transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1),
-                  transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     #brandHeader {
@@ -38,118 +36,109 @@
                   transform 400ms ease;
     }
 
-    .badge-in    { background:#e8f5e9; color:#2e7d32; }
-    .badge-low   { background:#fff8e1; color:#f57f17; }
-    .badge-out   { background:#fce4ec; color:#c62828; }
-    .badge-nil   { background:#f2f2f7; color:#8e8e93; }
+    .badge-in  { background:#e8f5e9; color:#2e7d32; }
+    .badge-low { background:#fff8e1; color:#f57f17; }
+    .badge-out { background:#fce4ec; color:#c62828; }
+    .badge-nil { background:#f2f2f7; color:#8e8e93; }
 
     /* Mode toggle */
     .mode-btn {
-      transition: background 200ms, color 200ms, box-shadow 200ms;
+      transition: background 200ms, color 200ms;
       -webkit-tap-highlight-color: transparent;
     }
-    .mode-btn.active {
-      background: #000;
-      color: #fff;
-      box-shadow: none;
-    }
-    .mode-btn:not(.active) {
-      background: #e8e8ed;
-      color: #3a3a3c;
-    }
+    .mode-btn.active { background: #000; color: #fff; }
+    .mode-btn:not(.active) { background: #e8e8ed; color: #3a3a3c; }
 
-    /* Bubble filter panels */
-    #bubblePanel {
-      transition: max-height 500ms cubic-bezier(0.4,0,0.2,1),
-                  opacity 400ms ease;
+    /* Filter panel */
+    #filterPanel {
+      transition: max-height 500ms cubic-bezier(0.4,0,0.2,1), opacity 400ms ease;
       overflow: hidden;
     }
 
-    /* Bubble chips */
-    .filter-bubble {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 5px 12px;
-      border-radius: 99px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      border: 1.5px solid #e0e0e0;
-      background: #fff;
-      color: #3a3a3c;
-      transition: background 150ms, color 150ms, border-color 150ms, transform 120ms;
-      white-space: nowrap;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .filter-bubble:active { transform: scale(0.95); }
-    .filter-bubble.selected {
-      background: #1c1c1e;
-      color: #fff;
-      border-color: #1c1c1e;
-    }
-    .filter-bubble .bubble-x {
-      font-size: 13px;
-      line-height: 1;
-      opacity: 0.7;
-      margin-left: 1px;
-    }
-
-    /* Applied chip in search bar area */
-    .applied-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 9px;
-      border-radius: 99px;
-      font-size: 11px;
-      font-weight: 600;
-      background: #1c1c1e;
-      color: #fff;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: opacity 150ms;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .applied-chip:active { opacity: 0.7; }
-    .applied-chip .chip-x {
-      font-size: 13px;
-      opacity: 0.7;
-    }
-
-    /* Search + chips row */
-    #searchRow {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      width: 100%;
-    }
-    #searchRow #searchInput {
-      flex: 1;
-      min-width: 0;
-      text-align: left;
-    }
-    #searchRow.no-chips #searchInput {
-      text-align: center;
-    }
-
-    .bubble-scroll {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 2px 0 4px;
-    }
-
-    .bubble-section-label {
+    /* Section label */
+    .section-label {
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #8e8e93;
-      margin-bottom: 6px;
-      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+
+    /* Bubble chips */
+    .bubble {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 13px;
+      border-radius: 99px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid #e0e0e0;
+      background: #fff;
+      color: #3a3a3c;
+      transition: background 130ms, color 130ms, border-color 130ms, transform 100ms;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      line-height: 1;
+    }
+    .bubble:active { transform: scale(0.93); }
+    .bubble.sel {
+      background: #1c1c1e;
+      color: #fff;
+      border-color: #1c1c1e;
+    }
+    .bubble .bx { font-size: 14px; opacity: 0.65; margin-left: 1px; line-height: 1; }
+
+    /* Scrollable row for bubbles */
+    .bubble-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding-bottom: 2px;
+    }
+
+    /* Search bar */
+    #searchRow { display: flex; align-items: center; gap: 6px; width: 100%; }
+    #searchRow #searchInput { flex: 1; min-width: 0; text-align: left; }
+
+    /* Applied chip in search bar */
+    .achip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 600;
+      background: #1c1c1e; color: #fff;
+      cursor: pointer; flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .achip:active { opacity: 0.7; }
+    .achip .cx { font-size: 13px; opacity: 0.7; }
+
+    /* Results */
+    #resultsList { scrollbar-width: thin; }
+
+    /* Back button (inside detail card) */
+    #backBtn {
+      position: absolute;
+      top: 16px; left: 16px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #f2f2f7;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 150ms;
+      z-index: 10;
+    }
+    #backBtn:active { background: #e0e0e5; }
+
+    /* Divider line */
+    .filter-divider {
+      height: 1px;
+      background: #f0f0f5;
+      margin: 14px 0;
     }
   </style>
 </head>
@@ -167,6 +156,7 @@
 
   <main id="mainContainer" class="w-full max-w-sm flex flex-col">
 
+    <!-- Brand header -->
     <div id="brandHeader" class="flex flex-col items-center overflow-hidden"
          style="max-height:6rem; opacity:1; margin-bottom:2.5rem; transform:scale(1);">
       <h1 class="text-3xl font-black tracking-tighter text-black uppercase"
@@ -176,51 +166,66 @@
     </div>
 
     <!-- Mode toggle -->
-    <div id="modeToggle" class="flex rounded-full overflow-hidden border border-[#e0e0e0] mb-4 w-fit mx-auto shadow-sm">
+    <div class="flex rounded-full overflow-hidden border border-[#e0e0e0] mb-4 w-fit mx-auto shadow-sm">
       <button id="modeBtn1" class="mode-btn active text-[11px] font-semibold tracking-wide px-4 py-1.5 rounded-l-full" onclick="setMode(1)">Search</button>
       <button id="modeBtn2" class="mode-btn text-[11px] font-semibold tracking-wide px-4 py-1.5 rounded-r-full" onclick="setMode(2)">Filter</button>
     </div>
 
-    <!-- Search row (shared input, chips appear here in mode 2) -->
-    <div id="searchRow" class="no-chips relative w-full z-10">
-      <!-- Applied filter chips render here dynamically -->
+    <!-- Search row -->
+    <div id="searchRow" class="relative w-full z-10">
       <input
-        type="text"
-        id="searchInput"
+        type="text" id="searchInput"
         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
         placeholder="Search product…"
         class="w-full px-5 py-3.5 bg-[#e8e8ed] focus:bg-white border border-transparent rounded-full transition-all duration-300 text-base text-black placeholder-[#8e8e93] font-normal tracking-wide shadow-sm"
         style="text-align:center;"
       >
-      <button id="clearBtn"
-        class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8e8e93] hidden transition-opacity"
-        aria-label="Clear search">
+      <button id="clearBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8e8e93] hidden" aria-label="Clear">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
 
-    <!-- Bubble filter panel (mode 2 only) -->
-    <div id="bubblePanel" style="max-height:0px; opacity:0;">
-      <div class="mt-4 w-full">
-        <div class="bubble-section-label">Shoe Type</div>
-        <div id="typeBubbles" class="bubble-scroll"></div>
+    <!-- ── Filter panel (mode 2 only) ── -->
+    <div id="filterPanel" style="max-height:0px; opacity:0;">
+      <div class="mt-5 w-full bg-white rounded-2xl border border-[#e8e8ed] shadow-sm px-4 pt-4 pb-3">
+
+        <!-- Shoe type -->
+        <div class="section-label">Model</div>
+        <div id="typeBubbles" class="bubble-row"></div>
+
+        <div class="filter-divider"></div>
+
+        <!-- Colour -->
+        <div class="section-label">Colour</div>
+        <div id="colourBubbles" class="bubble-row"></div>
+
       </div>
-      <div class="mt-4 w-full">
-        <div class="bubble-section-label">Colour</div>
-        <div id="colourBubbles" class="bubble-scroll"></div>
+
+      <!-- Result count pill -->
+      <div id="filterCount" class="text-[11px] text-[#8e8e93] text-center mt-3 hidden">
+        <span id="filterCountText"></span>
       </div>
     </div>
 
-    <div id="resultsList" class="space-y-2 max-h-80 overflow-y-auto mt-3 mb-1 w-full hidden z-20"></div>
+    <!-- Results list -->
+    <div id="resultsList" class="space-y-2 max-h-72 overflow-y-auto mt-3 mb-1 w-full hidden z-20"></div>
 
     <p id="footnote" class="text-[11px] text-[#8e8e93] text-center tracking-wide font-normal mt-3 mb-6 transition-opacity duration-300">
       Search by product name, SKU or colour
     </p>
 
+    <!-- Detail card -->
     <div id="detailCard"
-         class="w-full bg-white rounded-[24px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#e8e8ed] flex flex-col items-center opacity-0 translate-y-4 hidden z-0">
+         class="relative w-full bg-white rounded-[24px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#e8e8ed] flex flex-col items-center opacity-0 translate-y-4 hidden z-0">
+
+      <!-- Back to list button (only visible when coming from filter mode) -->
+      <div id="backBtn" class="hidden" title="Back to results">
+        <svg class="w-4 h-4 text-[#3a3a3c]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+        </svg>
+      </div>
 
       <div class="w-48 h-48 bg-[#fafafa] rounded-2xl flex items-center justify-center p-3 mb-5 overflow-hidden">
         <img id="detailImage" src="" alt="Product" class="object-contain max-w-full max-h-full mix-blend-multiply">
@@ -242,17 +247,17 @@
         </div>
       </div>
 
+      <!-- Barcode 1: base SKU (before hyphen) -->
       <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2 mb-2">
-        <span id="barcodeSkuLabel"
-          class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] uppercase font-medium select-all">
-        </span>
+        <span class="text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider">Product Code</span>
+        <span id="barcodeLabel1" class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] font-medium select-all"></span>
         <svg id="barcodeTarget" class="max-w-[90%]"></svg>
       </div>
 
+      <!-- Barcode 2: colour code (after hyphen) -->
       <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2">
-        <span id="barcodeSkuLabel2"
-          class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] uppercase font-medium select-all">
-        </span>
+        <span class="text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider">Colour Code</span>
+        <span id="barcodeLabel2" class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] font-medium select-all"></span>
         <svg id="barcodeTarget2" class="max-w-[90%]"></svg>
       </div>
     </div>
@@ -261,7 +266,6 @@
   </main>
 
   <script src="products.js"></script>
-
   <script>
     /* ─── Helpers ─── */
     function isNil(val) {
@@ -272,66 +276,80 @@
       if (isNil(raw)) return { qty: null, badgeClass: 'badge-nil', badgeText: 'Not set', displayStock: '—' };
       const qty = parseInt(raw, 10);
       if (isNaN(qty)) return { qty: null, badgeClass: 'badge-nil', badgeText: 'Not set', displayStock: String(raw) };
-      if (qty <= 0)  return { qty, badgeClass: 'badge-out', badgeText: 'Out of stock', displayStock: String(qty) };
-      if (qty <= 3)  return { qty, badgeClass: 'badge-low', badgeText: 'Low stock',    displayStock: String(qty) };
-      return           { qty, badgeClass: 'badge-in',  badgeText: 'In stock',     displayStock: String(qty) };
+      if (qty <= 0)   return { qty, badgeClass: 'badge-out', badgeText: 'Out of stock', displayStock: String(qty) };
+      if (qty <= 3)   return { qty, badgeClass: 'badge-low', badgeText: 'Low stock',    displayStock: String(qty) };
+      return                 { qty, badgeClass: 'badge-in',  badgeText: 'In stock',     displayStock: String(qty) };
     }
 
-    /* ─── Shoe type bubble definitions ─── */
+    /* Split SKU into [productCode, colourCode] */
+    function splitSku(sku) {
+      const idx = sku.lastIndexOf('-');
+      if (idx === -1) return [sku, null];
+      return [sku.slice(0, idx), sku.slice(idx + 1)];
+    }
+
+    /* ─── Shoe type bubbles ─── */
     const SHOE_TYPES = [
-      'GOLF', 'MEXICO 66 VINY', 'TGRS', 'TIGRUN', 'TIGTRAIL', 'TIGCOURT',
-      'CORSAIR', 'ROTEMIT', 'MEXICO 66', 'MEXICO 66 SD', 'MEXICO 66 SD VIN',
-      'MEXICO 66 SD PARATY', 'MEXICO 66 PF', 'MEXICO 66 SABOT',
-      'MEXICO 66 SLIP ON', 'MEXICO 66 PARATY', 'DELEGATION',
-      'SERRANO SLIP ON', 'SERRANO', 'CORSAIR A55', 'CALIFORNIA 78 EX',
-      'CALIFORNIA 78 VIN', 'EDR 78', 'CALIFORNIA 78', 'TSUNAHIKI SLIP ON',
-      'GSM', 'GSM SD', 'TOKUTEN', 'REBILAC SANDAL', 'OHBORI STRAP',
-      'OHBORI SLIDER 2.0', 'NIPPON MADE'
+      'MEXICO 66', 'MEXICO 66 SD', 'MEXICO 66 PF', 'MEXICO 66 SABOT',
+      'MEXICO 66 SLIP ON', 'MEXICO 66 PARATY', 'MEXICO 66 VINY',
+      'MEXICO 66 SD VIN', 'MEXICO 66 SD PARATY',
+      'SERRANO', 'SERRANO SLIP ON',
+      'CALIFORNIA 78', 'CALIFORNIA 78 EX', 'CALIFORNIA 78 VIN',
+      'GSM', 'GSM SD',
+      'CORSAIR', 'CORSAIR A55',
+      'TIGRUN', 'TIGTRAIL', 'TIGCOURT', 'TGRS',
+      'ROTEMIT', 'EDR 78', 'TOKUTEN',
+      'NIPPON MADE', 'GOLF', 'DELEGATION',
+      'OHBORI STRAP', 'OHBORI SLIDER 2.0',
+      'REBILAC SANDAL', 'TSUNAHIKI SLIP ON'
     ];
 
-    /* ─── Colour bubble definitions with keyword aliases ─── */
-    // Each entry: { label, aliases } where aliases are substrings to match against product.colour (case-insensitive)
+    /* ─── Colour groups — expanded for Onitsuka naming ─── */
     const COLOUR_GROUPS = [
-      { label: 'White',     aliases: ['white', 'cream', 'ivory', 'blanc'] },
-      { label: 'Black',     aliases: ['black', 'noir', 'onyx', 'jet'] },
-      { label: 'Grey',      aliases: ['grey', 'gray', 'ash', 'smoke', 'stone', 'silver'] },
-      { label: 'Red',       aliases: ['red', 'crimson', 'scarlet', 'tomato', 'cardinal', 'cherry'] },
-      { label: 'Pink',      aliases: ['pink', 'rose', 'blush', 'salmon', 'coral', 'peach'] },
-      { label: 'Orange',    aliases: ['orange', 'amber', 'tangerine', 'rust'] },
-      { label: 'Yellow',    aliases: ['yellow', 'lemon', 'gold', 'mustard', 'sun', 'butter'] },
-      { label: 'Green',     aliases: ['green', 'olive', 'sage', 'mint', 'forest', 'jade', 'lime'] },
-      { label: 'Blue',      aliases: ['blue', 'navy', 'cobalt', 'indigo', 'sky', 'royal', 'azure', 'teal', 'cyan', 'aqua'] },
-      { label: 'Purple',    aliases: ['purple', 'violet', 'lavender', 'plum', 'lilac', 'mauve'] },
-      { label: 'Brown',     aliases: ['brown', 'tan', 'camel', 'chocolate', 'mocha', 'cognac', 'khaki', 'beige', 'taupe', 'sand', 'espresso'] },
-      { label: 'Metallic',  aliases: ['metallic', 'silver', 'gold', 'glitter', 'holographic', 'shiny', 'chrome', 'iridescent', 'foil', 'sparkle'] },
-      { label: 'Multi',     aliases: ['multi', 'mix', 'rainbow', 'colorful', 'colourful', 'patterned'] },
+      { label: 'White',    aliases: ['white','cream','ivory','blanc','off-white','snow','milk','chalk','pearl','birch'] },
+      { label: 'Black',    aliases: ['black','noir','onyx','jet','ebony','charcoal','midnight','pitch'] },
+      { label: 'Grey',     aliases: ['grey','gray','ash','smoke','stone','silver','slate','graphite','cement','cool grey','warm grey'] },
+      { label: 'Red',      aliases: ['red','crimson','scarlet','tomato','cardinal','cherry','burgundy','wine','maroon','berry','rose red','firebrick','flame','poppy'] },
+      { label: 'Pink',     aliases: ['pink','rose','blush','salmon','coral','peach','dragonfruit','dragon fruit','flamingo','petal','candy','bubblegum','fuchsia','magenta','hot pink','baby pink','blossom','carnation','watermelon','raspberry','mauve','dusty rose','nude','lilac pink'] },
+      { label: 'Orange',   aliases: ['orange','amber','tangerine','rust','apricot','burnt orange','pumpkin','papaya','mango','ginger','clay','terracotta','cinnamon','copper'] },
+      { label: 'Yellow',   aliases: ['yellow','lemon','gold','mustard','sun','butter','banana','canary','saffron','amber yellow','wheat','sand yellow','maize','corn','straw'] },
+      { label: 'Green',    aliases: ['green','olive','sage','mint','forest','jade','lime','emerald','fern','moss','khaki','army','hunter','leaf','grass','pistachio','sea green','teal green','avocado','spring','aloe'] },
+      { label: 'Blue',     aliases: ['blue','navy','cobalt','indigo','sky','royal','azure','teal','cyan','aqua','marine','midnight blue','ocean','steel blue','powder blue','ice blue','airy blue','periwinkle','cornflower','sapphire','peacock','denim','baby blue','air blue','electric blue','stone blue'] },
+      { label: 'Purple',   aliases: ['purple','violet','lavender','plum','lilac','mauve','orchid','grape','amethyst','mulberry','eggplant','heather','wisteria'] },
+      { label: 'Brown',    aliases: ['brown','tan','camel','chocolate','mocha','cognac','khaki','beige','taupe','sand','espresso','hazel','bark','chestnut','coffee','caramel','walnut','sienna','fawn','toffee','mushroom','nude','latte','biscuit','almond'] },
+      { label: 'Metallic', aliases: ['metallic','glitter','holographic','shiny','chrome','iridescent','foil','sparkle','shimmer','mirror','glossy','reflective'] },
+      { label: 'Multi',    aliases: ['multi','mix','rainbow','colorful','colourful','patterned','tie-dye','tiedye','print','camo','camouflage','floral','stripe','check','plaid','graphic','abstract'] },
     ];
 
     /* ─── State ─── */
     let fuse;
     let isProductShowing = false;
     let currentMode = 1;
-    let activeTypeFilter = null;   // string or null
-    let activeColourFilter = null; // COLOUR_GROUPS entry or null
+    let activeTypeFilter   = null;
+    let activeColourFilter = null;
+    // Snapshot of results shown before product was opened (for back button)
+    let lastFilterResults  = null;
 
     /* ─── DOM refs ─── */
-    const searchInput   = document.getElementById('searchInput');
-    const clearBtn      = document.getElementById('clearBtn');
-    const resultsList   = document.getElementById('resultsList');
-    const detailCard    = document.getElementById('detailCard');
-    const layoutSpacer  = document.getElementById('layoutSpacer');
-    const footnote      = document.getElementById('footnote');
-    const brandHeader   = document.getElementById('brandHeader');
-    const homeBtn       = document.getElementById('homeBtn');
-    const bubblePanel   = document.getElementById('bubblePanel');
-    const searchRow     = document.getElementById('searchRow');
-    const typeBubblesEl = document.getElementById('typeBubbles');
-    const colourBubblesEl = document.getElementById('colourBubbles');
+    const searchInput    = document.getElementById('searchInput');
+    const clearBtn       = document.getElementById('clearBtn');
+    const resultsList    = document.getElementById('resultsList');
+    const detailCard     = document.getElementById('detailCard');
+    const layoutSpacer   = document.getElementById('layoutSpacer');
+    const footnote       = document.getElementById('footnote');
+    const brandHeader    = document.getElementById('brandHeader');
+    const homeBtn        = document.getElementById('homeBtn');
+    const filterPanel    = document.getElementById('filterPanel');
+    const typeBubblesEl  = document.getElementById('typeBubbles');
+    const colourBubblesEl= document.getElementById('colourBubbles');
+    const backBtn        = document.getElementById('backBtn');
+    const filterCount    = document.getElementById('filterCount');
+    const filterCountText= document.getElementById('filterCountText');
 
     /* ─── Init ─── */
     function initSearch() {
       fuse = new Fuse(inventoryData, {
-        keys: ['name', 'sku', 'colour'],
+        keys: ['name','sku','colour'],
         threshold: 0.35,
         ignoreLocation: true,
         minMatchCharLength: 2,
@@ -354,7 +372,7 @@
       brandHeader.style.transform    = 'scale(1)';
     }
 
-    /* ─── Product card ─── */
+    /* ─── Product card show/hide ─── */
     function fadeOutProduct(cb) {
       if (!isProductShowing) { if (cb) cb(); return; }
       detailCard.style.opacity   = '0';
@@ -363,8 +381,19 @@
       setTimeout(() => {
         detailCard.classList.add('hidden');
         if (cb) cb();
-      }, 500);
+      }, 400);
     }
+
+    /* ─── Back button: return to filter results ─── */
+    backBtn.addEventListener('click', () => {
+      fadeOutProduct(() => {
+        if (currentMode === 2 && lastFilterResults !== null) {
+          displayResultsRaw(lastFilterResults);
+          filterCount.classList.remove('hidden');
+          layoutSpacer.style.height = '4vh';
+        }
+      });
+    });
 
     /* ─── Mode switching ─── */
     function setMode(m) {
@@ -373,23 +402,25 @@
       document.getElementById('modeBtn2').classList.toggle('active', m === 2);
 
       if (m === 2) {
-        bubblePanel.style.maxHeight = '600px';
-        bubblePanel.style.opacity   = '1';
-        footnote.style.opacity = '0';
-        layoutSpacer.style.height = '4vh';
+        filterPanel.style.maxHeight = '700px';
+        filterPanel.style.opacity   = '1';
+        footnote.style.opacity      = '0';
+        layoutSpacer.style.height   = '4vh';
         hideLogo();
-        // clear Mode 1 results if any
         resultsList.innerHTML = '';
         resultsList.classList.add('hidden');
+        filterCount.classList.add('hidden');
       } else {
-        bubblePanel.style.maxHeight = '0px';
-        bubblePanel.style.opacity   = '0';
-        // clear filter state
-        activeTypeFilter = null;
+        filterPanel.style.maxHeight = '0px';
+        filterPanel.style.opacity   = '0';
+        activeTypeFilter   = null;
         activeColourFilter = null;
-        renderAppliedChips();
+        lastFilterResults  = null;
+        renderTypeBubbles();
+        renderColourBubbles();
         resultsList.innerHTML = '';
         resultsList.classList.add('hidden');
+        filterCount.classList.add('hidden');
         footnote.style.opacity = '1';
         if (!isProductShowing) {
           layoutSpacer.style.height = '28vh';
@@ -405,12 +436,12 @@
       typeBubblesEl.innerHTML = '';
       SHOE_TYPES.forEach(type => {
         const btn = document.createElement('button');
-        btn.className = 'filter-bubble' + (activeTypeFilter === type ? ' selected' : '');
+        const isSel = activeTypeFilter === type;
+        btn.className = 'bubble' + (isSel ? ' sel' : '');
         btn.textContent = type;
-        if (activeTypeFilter === type) {
+        if (isSel) {
           const x = document.createElement('span');
-          x.className = 'bubble-x';
-          x.textContent = '×';
+          x.className = 'bx'; x.textContent = '×';
           btn.appendChild(x);
         }
         btn.addEventListener('click', () => toggleTypeFilter(type));
@@ -421,14 +452,13 @@
     function renderColourBubbles() {
       colourBubblesEl.innerHTML = '';
       COLOUR_GROUPS.forEach(group => {
-        const isSelected = activeColourFilter && activeColourFilter.label === group.label;
+        const isSel = activeColourFilter && activeColourFilter.label === group.label;
         const btn = document.createElement('button');
-        btn.className = 'filter-bubble' + (isSelected ? ' selected' : '');
+        btn.className = 'bubble' + (isSel ? ' sel' : '');
         btn.textContent = group.label;
-        if (isSelected) {
+        if (isSel) {
           const x = document.createElement('span');
-          x.className = 'bubble-x';
-          x.textContent = '×';
+          x.className = 'bx'; x.textContent = '×';
           btn.appendChild(x);
         }
         btn.addEventListener('click', () => toggleColourFilter(group));
@@ -436,68 +466,29 @@
       });
     }
 
-    /* ─── Applied chips in search bar ─── */
-    function renderAppliedChips() {
-      // Remove existing chips
-      Array.from(searchRow.querySelectorAll('.applied-chip')).forEach(c => c.remove());
-
-      const hasChips = activeTypeFilter || activeColourFilter;
-      searchRow.classList.toggle('no-chips', !hasChips);
-      searchInput.style.textAlign = hasChips ? 'left' : 'center';
-
-      // Insert chips before the input
-      if (activeTypeFilter) {
-        const chip = makeChip(activeTypeFilter, () => { activeTypeFilter = null; onFiltersChanged(); });
-        searchRow.insertBefore(chip, searchInput);
-      }
-      if (activeColourFilter) {
-        const chip = makeChip(activeColourFilter.label, () => { activeColourFilter = null; onFiltersChanged(); });
-        searchRow.insertBefore(chip, searchInput);
-      }
-
-      // Adjust clear button so it still positions itself correctly
-      // (it's inside the input wrapper visually via absolute, but input is now flex child)
-    }
-
-    function makeChip(label, onRemove) {
-      const chip = document.createElement('div');
-      chip.className = 'applied-chip';
-      chip.innerHTML = `<span>${label}</span><span class="chip-x">×</span>`;
-      chip.addEventListener('click', onRemove);
-      return chip;
-    }
-
-    /* ─── Filter toggling ─── */
+    /* ─── Filter toggles ─── */
     function toggleTypeFilter(type) {
       activeTypeFilter = (activeTypeFilter === type) ? null : type;
       renderTypeBubbles();
-      renderAppliedChips();
       runFilteredSearch();
     }
 
     function toggleColourFilter(group) {
       activeColourFilter = (activeColourFilter && activeColourFilter.label === group.label) ? null : group;
       renderColourBubbles();
-      renderAppliedChips();
       runFilteredSearch();
     }
 
-    function onFiltersChanged() {
-      renderTypeBubbles();
-      renderColourBubbles();
-      renderAppliedChips();
-      runFilteredSearch();
-    }
-
-    /* ─── Core: filter + optional text search ─── */
+    /* ─── Core: filter + optional text ─── */
     function runFilteredSearch() {
       const query = searchInput.value.trim();
       const hasFilters = activeTypeFilter || activeColourFilter;
-      const hasQuery = query.length >= 2;
+      const hasQuery   = query.length >= 2;
 
       if (!hasFilters && !hasQuery) {
         resultsList.innerHTML = '';
         resultsList.classList.add('hidden');
+        filterCount.classList.add('hidden');
         footnote.style.opacity = currentMode === 1 ? '1' : '0';
         return;
       }
@@ -506,7 +497,6 @@
 
       let pool = inventoryData;
 
-      // Apply type filter: match product name starting with or containing the type string
       if (activeTypeFilter) {
         const tf = activeTypeFilter.toUpperCase();
         pool = pool.filter(p => {
@@ -515,20 +505,18 @@
         });
       }
 
-      // Apply colour filter: match product.colour against any alias
       if (activeColourFilter) {
         const aliases = activeColourFilter.aliases;
         pool = pool.filter(p => {
-          const col = (p.colour || '').toLowerCase();
+          const col = (p.colour || '').toLowerCase().replace(/-/g, ' ');
           return aliases.some(a => col.includes(a));
         });
       }
 
-      // Apply text search on top if there's a query
       let results;
       if (hasQuery) {
         const localFuse = new Fuse(pool, {
-          keys: ['name', 'sku', 'colour'],
+          keys: ['name','sku','colour'],
           threshold: 0.35,
           ignoreLocation: true,
           minMatchCharLength: 2,
@@ -538,14 +526,18 @@
         results = pool;
       }
 
+      lastFilterResults = results;
       displayResultsRaw(results);
+
+      // Show count
+      if (currentMode === 2) {
+        const n = results.length;
+        filterCountText.textContent = n === 0 ? 'No products match' : `${n} product${n > 1 ? 's' : ''} found`;
+        filterCount.classList.remove('hidden');
+      }
     }
 
     /* ─── Display helpers ─── */
-    function displayResults(fuseResults) {
-      displayResultsRaw(fuseResults.map(r => r.item));
-    }
-
     function displayResultsRaw(items) {
       resultsList.innerHTML = '';
       if (items.length === 0) {
@@ -557,7 +549,9 @@
         return;
       }
       resultsList.classList.remove('hidden');
-      items.slice(0, 8).forEach(p => {
+      // In filter mode show up to 12; in search mode up to 6/8
+      const cap = currentMode === 2 ? 12 : 8;
+      items.slice(0, cap).forEach(p => {
         const { badgeClass, badgeText } = stockMeta(p.stock);
         const div = document.createElement('div');
         div.className = "result-row p-3 bg-white border border-[#e8e8ed] rounded-2xl cursor-pointer flex items-center justify-between shadow-sm transition-transform duration-150";
@@ -574,7 +568,7 @@
           </div>
           <span class="flex-shrink-0 ml-2 text-[9px] font-semibold px-2 py-1 rounded-full ${badgeClass}">${badgeText}</span>
         `;
-        div.addEventListener('mousedown', (e) => e.preventDefault());
+        div.addEventListener('mousedown', e => e.preventDefault());
         div.addEventListener('click', () => selectItem(p));
         resultsList.appendChild(div);
       });
@@ -583,6 +577,7 @@
     /* ─── Select product ─── */
     function selectItem(product) {
       resultsList.classList.add('hidden');
+      filterCount.classList.add('hidden');
       searchInput.value = '';
       clearBtn.classList.add('hidden');
       searchInput.blur();
@@ -592,62 +587,72 @@
       const { badgeClass, badgeText, displayStock } = stockMeta(product.stock);
       const displayLocation = isNil(product.location) ? '—' : product.location;
 
-      document.getElementById('detailImage').src           = product.image || '';
-      document.getElementById('detailName').textContent    = product.name;
-      document.getElementById('detailColour').textContent  = product.colour;
-      document.getElementById('detailSku').textContent     = product.sku;
-      document.getElementById('detailStock').textContent   = displayStock;
+      document.getElementById('detailImage').src            = product.image || '';
+      document.getElementById('detailName').textContent     = product.name;
+      document.getElementById('detailColour').textContent   = product.colour;
+      document.getElementById('detailSku').textContent      = product.sku;
+      document.getElementById('detailStock').textContent    = displayStock;
       document.getElementById('detailLocation').textContent = displayLocation;
 
       const badge = document.getElementById('stockBadge');
       badge.textContent = badgeText;
       badge.className   = `inline-block mt-1 text-[9px] font-semibold px-1.5 py-0.5 rounded-full tracking-wide ${badgeClass}`;
 
-      document.getElementById('barcodeSkuLabel').textContent = 'SKU: ' + product.sku;
+      // Split SKU for barcodes
+      const [productCode, colourCode] = splitSku(product.sku);
+      document.getElementById('barcodeLabel1').textContent = productCode;
+      document.getElementById('barcodeLabel2').textContent = colourCode || '—';
 
-      const dotSku = product.sku.replace(/-/g, '.');
-      document.getElementById('barcodeSkuLabel2').textContent = 'SKU: ' + dotSku;
+      // Show back button only in filter mode
+      if (currentMode === 2) {
+        backBtn.classList.remove('hidden');
+      } else {
+        backBtn.classList.add('hidden');
+      }
 
       detailCard.classList.remove('hidden');
       detailCard.style.opacity   = '0';
       detailCard.style.transform = 'translateY(1rem)';
       isProductShowing = true;
 
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          detailCard.style.opacity   = '1';
-          detailCard.style.transform = 'translateY(0)';
-        });
-      });
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        detailCard.style.opacity   = '1';
+        detailCard.style.transform = 'translateY(0)';
+      }));
 
       try {
-        JsBarcode("#barcodeTarget", product.sku, {
+        JsBarcode("#barcodeTarget", productCode, {
           format: "CODE128", lineColor: "#1c1c1e", width: 1.8, height: 56, displayValue: false, margin: 0,
         });
-      } catch (err) { document.getElementById('barcodeTarget').innerHTML = ''; }
+      } catch { document.getElementById('barcodeTarget').innerHTML = ''; }
 
-      try {
-        JsBarcode("#barcodeTarget2", dotSku, {
-          format: "CODE128", lineColor: "#1c1c1e", width: 1.8, height: 56, displayValue: false, margin: 0,
-        });
-      } catch (err) { document.getElementById('barcodeTarget2').innerHTML = ''; }
+      if (colourCode) {
+        try {
+          JsBarcode("#barcodeTarget2", colourCode, {
+            format: "CODE128", lineColor: "#1c1c1e", width: 1.8, height: 56, displayValue: false, margin: 0,
+          });
+        } catch { document.getElementById('barcodeTarget2').innerHTML = ''; }
+      } else {
+        document.getElementById('barcodeTarget2').innerHTML = '';
+      }
     }
 
-    /* ─── Reset ─── */
+    /* ─── Reset to home ─── */
     function resetToHome() {
       searchInput.value = '';
       clearBtn.classList.add('hidden');
       resultsList.innerHTML = '';
       resultsList.classList.add('hidden');
+      filterCount.classList.add('hidden');
       footnote.style.opacity = '1';
-      activeTypeFilter = null;
+      activeTypeFilter   = null;
       activeColourFilter = null;
+      lastFilterResults  = null;
       currentMode = 1;
       document.getElementById('modeBtn1').classList.add('active');
       document.getElementById('modeBtn2').classList.remove('active');
-      bubblePanel.style.maxHeight = '0px';
-      bubblePanel.style.opacity   = '0';
-      renderAppliedChips();
+      filterPanel.style.maxHeight = '0px';
+      filterPanel.style.opacity   = '0';
       renderTypeBubbles();
       renderColourBubbles();
       fadeOutProduct();
@@ -658,7 +663,7 @@
     homeBtn.addEventListener('click', resetToHome);
 
     /* ─── Clear button ─── */
-    clearBtn.addEventListener('mousedown', (e) => {
+    clearBtn.addEventListener('mousedown', e => {
       e.preventDefault();
       searchInput.value = '';
       clearBtn.classList.add('hidden');
@@ -672,7 +677,7 @@
       searchInput.focus();
     });
 
-    /* ─── Input events ─── */
+    /* ─── Input focus/blur ─── */
     searchInput.addEventListener('focus', () => {
       layoutSpacer.style.height = '4vh';
       if (isProductShowing && currentMode === 1) {
@@ -688,12 +693,12 @@
       }
     });
 
-    searchInput.addEventListener('input', (e) => {
+    /* ─── Input handler ─── */
+    searchInput.addEventListener('input', e => {
       const query = e.target.value.trim();
       clearBtn.classList.toggle('hidden', query.length === 0);
 
       if (currentMode === 1) {
-        // ── Mode 1: original behaviour ──
         if (query.length < 2) {
           resultsList.innerHTML = '';
           resultsList.classList.add('hidden');
@@ -728,14 +733,13 @@
                 </div>
               </div>
             </div>
-            <span class="flex-shrink-0 ml-2 text-[9px] font-semibold px-2 py-1 rounded-full ${badgeClass}">${badgeText}</span>
+              <span class="flex-shrink-0 ml-2 text-[9px] font-semibold px-2 py-1 rounded-full ${badgeClass}">${badgeText}</span>
           `;
-          div.addEventListener('mousedown', (e) => e.preventDefault());
+          div.addEventListener('mousedown', e => e.preventDefault());
           div.addEventListener('click', () => selectItem(p));
           resultsList.appendChild(div);
         });
       } else {
-        // ── Mode 2: filter + optional text refine ──
         runFilteredSearch();
       }
     });
