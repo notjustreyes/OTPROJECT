@@ -398,11 +398,22 @@
       clearBtn.classList.add('hidden');
     }
 
+    // Resolves what official SHOE_TYPE an inventory item belongs to based on the longest matching substring
+    function resolveProductType(productName) {
+      const name = (productName || '').trim().toUpperCase();
+      const matches = SHOE_TYPES.filter(type => name.includes(type.toUpperCase()));
+      if (matches.length > 0) {
+        // Return the longest matched string block (handles specific variants like "MEXICO 66 SABOT" safely over "MEXICO 66")
+        return matches.reduce((longest, current) => current.length > longest.length ? current : longest).toUpperCase();
+      }
+      return name;
+    }
+
     function getSortedModels() {
       const counts = {};
       inventoryData.forEach(p => {
-        const normName = (p.name || '').trim().toUpperCase();
-        counts[normName] = (counts[normName] || 0) + 1;
+        const resolvedType = resolveProductType(p.name);
+        counts[resolvedType] = (counts[resolvedType] || 0) + 1;
       });
 
       let models = [...SHOE_TYPES];
@@ -438,7 +449,7 @@
       let pool = inventoryData;
       if (activeTypeFilter) {
         const tf = activeTypeFilter.toUpperCase();
-        pool = pool.filter(p => (p.name || '').trim().toUpperCase() === tf);
+        pool = pool.filter(p => resolveProductType(p.name) === tf);
       }
 
       return [...COLOUR_GROUPS]
@@ -461,7 +472,7 @@
       typeBubblesEl.innerHTML = '';
       getSortedModels().forEach(type => {
         const count = inventoryData.filter(
-          p => (p.name || '').trim().toUpperCase() === type.toUpperCase()
+          p => resolveProductType(p.name) === type.toUpperCase()
         ).length;
         
         const btn = document.createElement('button');
@@ -549,7 +560,7 @@
 
       if (activeTypeFilter) {
         const tf = activeTypeFilter.toUpperCase();
-        pool = pool.filter(p => (p.name || '').trim().toUpperCase() === tf);
+        pool = pool.filter(p => resolveProductType(p.name) === tf);
       }
 
       if (activeColourFilter) {
