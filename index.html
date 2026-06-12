@@ -266,20 +266,33 @@
     // Generated dynamically at runtime from inventoryData
     let SHOE_TYPES = [];
 
+    const COLOUR_OVERRIDES = {
+      'peacoat': 'Blue',
+      'carrier': 'Grey',
+      'mantle': 'Green',
+      'putty': 'Brown',
+      'wood': 'Brown',
+      'crepe': 'Brown',
+      'dried rose': 'Pink',
+      'moss': 'Green',
+      'forest': 'Green',
+      'olive': 'Green'
+    };
+
     const COLOUR_GROUPS = [
-      { label: 'White',    aliases: ['white','cream','ivory','blanc','off-white','snow','milk','chalk','pearl','birch'] },
-      { label: 'Black',    aliases: ['black','noir','onyx','jet','ebony','charcoal','midnight','pitch'] },
-      { label: 'Grey',     aliases: ['grey','gray','ash','smoke','stone','silver','slate','graphite','cement','cool grey','warm grey'] },
+      { label: 'White',    aliases: ['white','cream','ivory','off white','off-white','snow','milk','chalk','pearl','birch','vanilla','oatmeal','eggshell','bone','linen','natural'] },
+      { label: 'Black',    aliases: ['black','noir','onyx','jet','ebony','charcoal','midnight','pitch','phantom','graphite','carbon','coal','ink','raven','asphalt','obsidian','anthracite','gunmetal','dark grey','dark gray'] },
+      { label: 'Grey',     aliases: ['grey','gray','ash','smoke','stone','slate','cement','concrete','mist','fog','graphite grey','cool grey','warm grey','light grey','silver grey'] },
+      { label: 'Brown',    aliases: ['brown','dark brown','light brown','camel','tan','beige','taupe','sand','khaki','mocha','espresso','coffee','cognac','walnut','hazel','almond','latte','chocolate','caramel','biscuit','sienna','earth'] },
+      { label: 'Blue',     aliases: ['blue','navy','cobalt','indigo','sky','royal','azure','teal','cyan','aqua','marine','midnight blue','ocean','steel blue','powder blue','ice blue','airy blue','periwinkle','cornflower','sapphire','peacock','denim','baby blue','air blue','electric blue','stone blue'] },
+      { label: 'Green',    aliases: ['green','lime','emerald','fern','jade','army','hunter','leaf','grass','pistachio','sea green','teal green','avocado','spring','aloe'] },
       { label: 'Red',      aliases: ['red','crimson','scarlet','tomato','cardinal','cherry','burgundy','wine','maroon','berry','rose red','firebrick','flame','poppy'] },
       { label: 'Pink',     aliases: ['pink','rose','blush','salmon','coral','peach','dragonfruit','dragon fruit','flamingo','petal','candy','bubblegum','fuchsia','magenta','hot pink','baby pink','blossom','carnation','watermelon','raspberry','mauve','dusty rose','nude','lilac pink'] },
-      { label: 'Orange',   aliases: ['orange','amber','tangerine','rust','apricot','burnt orange','pumpkin','papaya','mango','ginger','clay','terracotta','cinnamon','copper'] },
       { label: 'Yellow',   aliases: ['yellow','lemon','gold','mustard','sun','butter','banana','canary','saffron','amber yellow','wheat','sand yellow','maize','corn','straw'] },
-      { label: 'Green',    aliases: ['green','olive','sage','mint','forest','jade','lime','emerald','fern','moss','khaki','army','hunter','leaf','grass','pistachio','sea green','teal green','avocado','spring','aloe'] },
-      { label: 'Blue',     aliases: ['blue','navy','cobalt','indigo','sky','royal','azure','teal','cyan','aqua','marine','midnight blue','ocean','steel blue','powder blue','ice blue','airy blue','periwinkle','cornflower','sapphire','peacock','denim','baby blue','air blue','electric blue','stone blue'] },
+      { label: 'Orange',   aliases: ['orange','amber','tangerine','rust','apricot','burnt orange','pumpkin','papaya','mango','ginger','clay','terracotta','cinnamon','copper'] },
       { label: 'Purple',   aliases: ['purple','violet','lavender','plum','lilac','mauve','orchid','grape','amethyst','mulberry','eggplant','heather','wisteria'] },
-      { label: 'Brown',    aliases: ['brown','tan','camel','chocolate','mocha','cognac','khaki','beige','taupe','sand','espresso','hazel','bark','chestnut','coffee','caramel','walnut','sienna','fawn','toffee','mushroom','nude','latte','biscuit','almond'] },
-      { label: 'Metallic', aliases: ['metallic','glitter','holographic','shiny','chrome','iridescent','foil','sparkle','shimmer','mirror','glossy','reflective'] },
-      { label: 'Multi',    aliases: ['multi','mix','rainbow','colorful','colourful','patterned','tie-dye','tiedye','print','camo','camouflage','floral','stripe','check','plaid','graphic','abstract'] },
+      { label: 'Metallic', aliases: ['metallic','silver','gold','chrome','foil','mirror','reflective','shimmer','glitter','sparkle','iridescent','holographic','platinum','bronze','copper','steel','aluminium','aluminum','pewter','titanium','gunmetal'] },
+      { label: 'Multi',    aliases: ['multi','mix','rainbow','colorful','colourful','patterned','tie-dye','tiedye','print','camo','camouflage','floral','stripe','check','plaid','graphic','abstract'] }
     ];
 
     let fuse;
@@ -471,6 +484,13 @@
         .map(group => {
           const count = pool.filter(product => {
             const colour = (product.colour || '').toLowerCase().replace(/-/g, ' ');
+
+            for (const key in COLOUR_OVERRIDES) {
+              if (colour.includes(key)) {
+                return COLOUR_OVERRIDES[key] === group.label;
+              }
+            }
+
             return group.aliases.some(alias => colour.includes(alias));
           }).length;
           return { ...group, count };
@@ -580,9 +600,18 @@
       }
 
       if (activeColourFilter) {
+        const targetLabel = activeColourFilter.label;
         const aliases = activeColourFilter.aliases;
+        
         pool = pool.filter(p => {
           const col = (p.colour || '').toLowerCase().replace(/-/g, ' ');
+
+          for (const key in COLOUR_OVERRIDES) {
+            if (col.includes(key)) {
+              return COLOUR_OVERRIDES[key] === targetLabel;
+            }
+          }
+
           return aliases.some(a => col.includes(a));
         });
       }
