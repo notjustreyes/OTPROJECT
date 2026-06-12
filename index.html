@@ -19,7 +19,10 @@
     #resultsList::-webkit-scrollbar { width: 3px; }
     #resultsList::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 99px; }
 
-    #searchInput:focus { outline: none; box-shadow: 0 0 0 1.5px #000; }
+    /* Updated focus handling to wrapper */
+    #searchRow:focus-within { background: #fff; box-shadow: 0 0 0 1.5px #000; }
+    #searchRow #searchInput { flex: 1; min-width: 0; text-align: left; }
+    #searchRow #searchInput:focus { outline: none; }
 
     .result-row { -webkit-tap-highlight-color: transparent; }
     .result-row:active { transform: scale(0.985); }
@@ -100,10 +103,6 @@
       padding-bottom: 2px;
     }
 
-    /* Search bar */
-    #searchRow { display: flex; align-items: center; gap: 6px; width: 100%; }
-    #searchRow #searchInput { flex: 1; min-width: 0; text-align: left; }
-
     /* Applied chip in search bar */
     .achip {
       display: inline-flex; align-items: center; gap: 4px;
@@ -156,7 +155,6 @@
 
   <main id="mainContainer" class="w-full max-w-sm flex flex-col">
 
-    <!-- Brand header -->
     <div id="brandHeader" class="flex flex-col items-center overflow-hidden"
          style="max-height:6rem; opacity:1; margin-bottom:2.5rem; transform:scale(1);">
       <h1 class="text-3xl font-black tracking-tighter text-black uppercase"
@@ -165,62 +163,53 @@
       </h1>
     </div>
 
-    <!-- Mode toggle -->
     <div class="flex rounded-full overflow-hidden border border-[#e0e0e0] mb-4 w-fit mx-auto shadow-sm">
       <button id="modeBtn1" class="mode-btn active text-[11px] font-semibold tracking-wide px-4 py-1.5 rounded-l-full" onclick="setMode(1)">Search</button>
       <button id="modeBtn2" class="mode-btn text-[11px] font-semibold tracking-wide px-4 py-1.5 rounded-r-full" onclick="setMode(2)">Filter</button>
     </div>
 
-    <!-- Search row -->
-    <div id="searchRow" class="relative w-full z-10">
+    <div id="searchRow" class="relative w-full z-10 flex items-center bg-[#e8e8ed] rounded-full transition-all duration-300 shadow-sm px-2">
+      <div id="activeFilters" class="flex gap-1.5 shrink-0 pl-1 empty:hidden"></div>
       <input
         type="text" id="searchInput"
         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
         placeholder="Search product…"
-        class="w-full px-5 py-3.5 bg-[#e8e8ed] focus:bg-white border border-transparent rounded-full transition-all duration-300 text-base text-black placeholder-[#8e8e93] font-normal tracking-wide shadow-sm"
-        style="text-align:center;"
+        class="w-full px-3 py-3.5 bg-transparent border-transparent outline-none transition-all duration-300 text-base text-black placeholder-[#8e8e93] font-normal tracking-wide"
       >
-      <button id="clearBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8e8e93] hidden" aria-label="Clear">
+      <button id="clearBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#8e8e93] hidden bg-transparent" aria-label="Clear">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
 
-    <!-- ── Filter panel (mode 2 only) ── -->
     <div id="filterPanel" style="max-height:0px; opacity:0;">
       <div class="mt-5 w-full bg-white rounded-2xl border border-[#e8e8ed] shadow-sm px-4 pt-4 pb-3">
 
-        <!-- Shoe type -->
         <div class="section-label">Model</div>
         <div id="typeBubbles" class="bubble-row"></div>
 
         <div class="filter-divider"></div>
 
-        <!-- Colour -->
         <div class="section-label">Colour</div>
         <div id="colourBubbles" class="bubble-row"></div>
 
       </div>
 
-      <!-- Result count pill -->
       <div id="filterCount" class="text-[11px] text-[#8e8e93] text-center mt-3 hidden">
         <span id="filterCountText"></span>
       </div>
     </div>
 
-    <!-- Results list -->
     <div id="resultsList" class="space-y-2 max-h-72 overflow-y-auto mt-3 mb-1 w-full hidden z-20"></div>
 
     <p id="footnote" class="text-[11px] text-[#8e8e93] text-center tracking-wide font-normal mt-3 mb-6 transition-opacity duration-300">
       Search by product name, SKU or colour
     </p>
 
-    <!-- Detail card -->
     <div id="detailCard"
          class="relative w-full bg-white rounded-[24px] p-6 shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-[#e8e8ed] flex flex-col items-center opacity-0 translate-y-4 hidden z-0">
 
-      <!-- Back to list button (only visible when coming from filter mode) -->
       <div id="backBtn" class="hidden" title="Back to results">
         <svg class="w-4 h-4 text-[#3a3a3c]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
@@ -247,14 +236,12 @@
         </div>
       </div>
 
-      <!-- Barcode 1: base SKU (before hyphen) -->
       <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2 mb-2">
         <span class="text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider">Product Code</span>
         <span id="barcodeLabel1" class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] font-medium select-all"></span>
         <svg id="barcodeTarget" class="max-w-[90%]"></svg>
       </div>
 
-      <!-- Barcode 2: colour code (after hyphen) -->
       <div class="w-full flex flex-col items-center bg-white border border-[#f2f2f7] rounded-xl py-4 px-3 gap-2">
         <span class="text-[9px] text-[#8e8e93] uppercase font-semibold tracking-wider">Colour Code</span>
         <span id="barcodeLabel2" class="text-[11px] font-mono tracking-[0.18em] text-[#3a3a3c] font-medium select-all"></span>
@@ -345,6 +332,7 @@
     const backBtn        = document.getElementById('backBtn');
     const filterCount    = document.getElementById('filterCount');
     const filterCountText= document.getElementById('filterCountText');
+    const activeFiltersEl= document.getElementById('activeFilters');
 
     /* ─── Init ─── */
     function initSearch() {
@@ -416,6 +404,7 @@
         activeTypeFilter   = null;
         activeColourFilter = null;
         lastFilterResults  = null;
+        renderActiveFilters();
         renderTypeBubbles();
         renderColourBubbles();
         resultsList.innerHTML = '';
@@ -431,14 +420,77 @@
       clearBtn.classList.add('hidden');
     }
 
+    /* ─── Dynamic Sorting Logic ─── */
+    function getSortedModels() {
+      const counts = {};
+      inventoryData.forEach(p => {
+        counts[p.name] = (counts[p.name] || 0) + 1;
+      });
+
+      let models = [...SHOE_TYPES];
+
+      // Popularity
+      models.sort((a, b) => {
+        if (a === activeTypeFilter || b === activeTypeFilter) return 0;
+        const aCount = counts[a] || 0;
+        const bCount = counts[b] || 0;
+        return bCount - aCount;
+      });
+
+      // Search relevance
+      const query = searchInput.value.trim().toUpperCase();
+      if (query.length >= 2) {
+        models.sort((a, b) => {
+          const aMatch = a.includes(query);
+          const bMatch = b.includes(query);
+          if (aMatch && !bMatch) return -1;
+          if (!aMatch && bMatch) return 1;
+          return 0;
+        });
+      }
+
+      // Selected model always first
+      models.sort((a, b) => {
+        if (a === activeTypeFilter) return -1;
+        if (b === activeTypeFilter) return 1;
+        return 0;
+      });
+
+      return models;
+    }
+
+    function getSortedColours() {
+      let pool = inventoryData;
+      if (activeTypeFilter) {
+        pool = pool.filter(p => p.name === activeTypeFilter || (p.name || '').toUpperCase().includes(activeTypeFilter.toUpperCase()));
+      }
+
+      return [...COLOUR_GROUPS]
+        .map(group => {
+          const count = pool.filter(product => {
+            const colour = (product.colour || '').toLowerCase().replace(/-/g, ' ');
+            return group.aliases.some(alias => colour.includes(alias));
+          }).length;
+          return { ...group, count };
+        })
+        .filter(group => group.count > 0)
+        .sort((a, b) => {
+          if (activeColourFilter && a.label === activeColourFilter.label) return -1;
+          if (activeColourFilter && b.label === activeColourFilter.label) return 1;
+          return b.count - a.count;
+        });
+    }
+
     /* ─── Bubble rendering ─── */
     function renderTypeBubbles() {
       typeBubblesEl.innerHTML = '';
-      SHOE_TYPES.forEach(type => {
+      getSortedModels().forEach(type => {
+        const count = inventoryData.filter(p => p.name === type).length;
         const btn = document.createElement('button');
         const isSel = activeTypeFilter === type;
         btn.className = 'bubble' + (isSel ? ' sel' : '');
-        btn.textContent = type;
+        btn.textContent = `${type} (${count})`;
+        
         if (isSel) {
           const x = document.createElement('span');
           x.className = 'bx'; x.textContent = '×';
@@ -451,11 +503,12 @@
 
     function renderColourBubbles() {
       colourBubblesEl.innerHTML = '';
-      COLOUR_GROUPS.forEach(group => {
+      getSortedColours().forEach(group => {
         const isSel = activeColourFilter && activeColourFilter.label === group.label;
         const btn = document.createElement('button');
         btn.className = 'bubble' + (isSel ? ' sel' : '');
-        btn.textContent = group.label;
+        btn.textContent = `${group.label} (${group.count})`;
+
         if (isSel) {
           const x = document.createElement('span');
           x.className = 'bx'; x.textContent = '×';
@@ -466,15 +519,37 @@
       });
     }
 
+    /* ─── Active Filter Chips Inside Search Bar ─── */
+    function renderActiveFilters() {
+      activeFiltersEl.innerHTML = '';
+      if (activeTypeFilter) {
+        const chip = document.createElement('div');
+        chip.className = 'achip';
+        chip.innerHTML = `${activeTypeFilter} <span class="cx">×</span>`;
+        chip.addEventListener('click', () => toggleTypeFilter(activeTypeFilter));
+        activeFiltersEl.appendChild(chip);
+      }
+      if (activeColourFilter) {
+        const chip = document.createElement('div');
+        chip.className = 'achip';
+        chip.innerHTML = `${activeColourFilter.label} <span class="cx">×</span>`;
+        chip.addEventListener('click', () => toggleColourFilter(activeColourFilter));
+        activeFiltersEl.appendChild(chip);
+      }
+    }
+
     /* ─── Filter toggles ─── */
     function toggleTypeFilter(type) {
       activeTypeFilter = (activeTypeFilter === type) ? null : type;
+      renderActiveFilters();
       renderTypeBubbles();
+      renderColourBubbles();
       runFilteredSearch();
     }
 
     function toggleColourFilter(group) {
       activeColourFilter = (activeColourFilter && activeColourFilter.label === group.label) ? null : group;
+      renderActiveFilters();
       renderColourBubbles();
       runFilteredSearch();
     }
@@ -653,6 +728,7 @@
       document.getElementById('modeBtn2').classList.remove('active');
       filterPanel.style.maxHeight = '0px';
       filterPanel.style.opacity   = '0';
+      renderActiveFilters();
       renderTypeBubbles();
       renderColourBubbles();
       fadeOutProduct();
@@ -740,6 +816,8 @@
           resultsList.appendChild(div);
         });
       } else {
+        renderTypeBubbles();
+        renderColourBubbles();
         runFilteredSearch();
       }
     });
