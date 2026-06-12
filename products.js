@@ -77,7 +77,6 @@ const inventoryData = [
     "colour": "Black/Dragon Fruit",
     "stock": "NIL",
     "location": "NIL",
-    "__EMPTY": "golf",
     "image": "https://images.asics.com/is/image/asics/1183C557_001_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   },
   {
@@ -119,5 +118,21 @@ const inventoryData = [
     "stock": "NIL",
     "location": "NIL",
     "image": "https://images.asics.com/is/image/asics/1183C557_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C577-201",
+    "name": "MEXICO 66 VINY",
+    "colour": "Birch/Beet Juice",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C577_201_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C577-100",
+    "name": "MEXICO 66 VINY",
+    "colour": "Off-White/Iron Navy",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C577_100_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   }
 ];
