@@ -168,6 +168,14 @@ const inventoryData = [
     "image": "https://images.asics.com/is/image/asics/1182A708_701_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   },
   {
+    "sku": "1182A708-701",
+    "name": "MEXICO 66 TGRS",
+    "colour": "Crystal Pink/Cream",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1182A708_701_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
     "sku": "1182A678-700",
     "name": "MEXICO 66 TGRS",
     "colour": "Crystal Pink/Graphite Grey",
