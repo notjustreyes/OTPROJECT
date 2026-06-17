@@ -544,11 +544,11 @@ const inventoryData = [
     "image": "https://images.asics.com/is/image/asics/1183C015_202_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   },
   {
-    "sku": "1183c105-205",
+    "sku": "1183C105-205",
     "name": "MEXICO 66 SD VIN",
     "colour": "Clay Crayon/Cream",
     "stock": "NIL",
     "location": "NIL",
-    "image": "https://images.asics.com/is/image/asics/1183c105_205_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+    "image": "https://images.asics.com/is/image/asics/1183C105_205_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   }
 ];
