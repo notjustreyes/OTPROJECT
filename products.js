@@ -486,5 +486,67 @@ const inventoryData = [
     "stock": "NIL",
     "location": "NIL",
     "image": "https://images.asics.com/is/image/asics/1183C580_400_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C015-106",
+    "name": "MEXICO 66 SD VIN",
+    "colour": "Off-White/Purple Spectrum",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C015_106_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C015-400",
+    "name": "MEXICO 66 SD VIN",
+    "colour": "Peacoat/Wheat Yellow",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C015_400_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C015-201",
+    "name": "MEXICO 66 SD VIN",
+    "colour": "Birch/Green",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C015_201_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C015-104",
+    "name": "MEXICO 66 SD VIN",
+    "colour": "White/Director Blue",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C015_104_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C015-200",
+    "name": "MEXICO 66 SD VIN",
+    "colour": "Birch/Metropolis",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C015_200_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C015-101",
+    "name": "MEXICO 66 SD VIN",
+    "colour": "Cream/Birch",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C015_101_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C015-202",
+    "colour": "Beige/Beet Juice",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C015_202_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183c105-205",
+    "colour": "Clay Crayon/Cream",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183c105_205_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   }
 ];
