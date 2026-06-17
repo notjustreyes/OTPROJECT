@@ -334,5 +334,157 @@ const inventoryData = [
     "stock": "NIL",
     "location": "NIL",
     "image": "https://images.asics.com/is/image/asics/1183C468_200_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-112",
+    "name": "MEXICO 66 SD",
+    "colour": "Cream/Pure Gold",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_112_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C345-101",
+    "name": "MEXICO 66 SD",
+    "colour": "White/Rose Gold",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C345_101_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C345-100",
+    "name": "MEXICO 66 SD",
+    "colour": "White/Pure Silver",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C345_100_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "11838955-020",
+    "name": "MEXICO 66 SD",
+    "colour": "Pure Silver/Cream",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/11838955_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A592-200",
+    "name": "MEXICO 66 SD",
+    "colour": "Birch/Silver",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A592_200_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-106",
+    "name": "MEXICO 66 SD",
+    "colour": "White/Rose Gold",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_106_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-101",
+    "name": "MEXICO 66 SD",
+    "colour": "Cream/Peacoat",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_101_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-200",
+    "name": "MEXICO 66 SD",
+    "colour": "Birch/Peacoat",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_200_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-100",
+    "name": "MEXICO 66 SD",
+    "colour": "Birch/Green",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_100_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-254",
+    "name": "MEXICO 66 SD",
+    "colour": "Beige/Green",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_254_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-752",
+    "name": "MEXICO 66 SD",
+    "colour": "Yellow/Black",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_752_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-003",
+    "name": "MEXICO 66 SD",
+    "colour": "Black/Yellow",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_003_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-004",
+    "name": "MEXICO 66 SD",
+    "colour": "Black/Black",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_004_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183A872-204",
+    "name": "MEXICO 66 SD",
+    "colour": "Licorice Brown/Champagne",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183A872_204_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C517-300",
+    "name": "MEXICO 66 SD",
+    "colour": "Spruce Green/Mineral Beige",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C517_300_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C115-001",
+    "name": "MEXICO 66 SD",
+    "colour": "Black/Black",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C115_001_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C115-020",
+    "name": "MEXICO 66 SD",
+    "colour": "Metropolis/Metropolis",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C115_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C580-020",
+    "name": "MEXICO 66 SD",
+    "colour": "Graphite Grey/Graphite Grey",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C580_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+  },
+  {
+    "sku": "1183C580-400",
+    "name": "MEXICO 66 SD",
+    "colour": "Grey Floss/Grey Floss",
+    "stock": "NIL",
+    "location": "NIL",
+    "image": "https://images.asics.com/is/image/asics/1183C580_400_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   }
 ];
