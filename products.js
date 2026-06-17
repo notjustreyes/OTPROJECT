@@ -360,12 +360,12 @@ const inventoryData = [
     "image": "https://images.asics.com/is/image/asics/1183C345_100_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   },
   {
-    "sku": "11838955-020",
+    "sku": "1183B955-020",
     "name": "MEXICO 66 SD",
     "colour": "Pure Silver/Cream",
     "stock": "NIL",
     "location": "NIL",
-    "image": "https://images.asics.com/is/image/asics/11838955_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
+    "image": "https://images.asics.com/is/image/asics/1183B955_020_SR_RT_GLB?qlt=100&wid=1280&hei=1452&bgc=255,255,255&resMode=bisharp"
   },
   {
     "sku": "1183A592-200",
