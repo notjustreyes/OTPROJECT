@@ -537,6 +537,7 @@ const inventoryData = [
   },
   {
     "sku": "1183C015-202",
+    "name": "MEXICO 66 SD VIN",
     "colour": "Beige/Beet Juice",
     "stock": "NIL",
     "location": "NIL",
@@ -544,6 +545,7 @@ const inventoryData = [
   },
   {
     "sku": "1183c105-205",
+    "name": "MEXICO 66 SD VIN",
     "colour": "Clay Crayon/Cream",
     "stock": "NIL",
     "location": "NIL",
